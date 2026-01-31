@@ -25,8 +25,8 @@ npm install -g odds-api-mcp-server
 ### From Source
 
 ```bash
-git clone https://github.com/oddsapi-io/mcp-server
-cd mcp-server
+git clone https://github.com/odds-api-io/odds-api-mcp-server
+cd odds-api-mcp-server
 npm install
 npm run build
 ```
