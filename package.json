@@ -9,7 +9,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts"
+    "dev": "ts-node src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [
     "mcp",
@@ -32,13 +34,13 @@
     "url": "https://github.com/odds-api-io/odds-api-mcp-server/issues"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.5.0",
-    "zod": "^3.22.4"
+    "@modelcontextprotocol/sdk": "^0.5.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.2",
+    "vitest": "^4.1.2"
   },
   "engines": {
     "node": ">=18.0.0"
