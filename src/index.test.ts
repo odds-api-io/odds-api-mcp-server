@@ -264,6 +264,7 @@ describe("apiRequest", () => {
 
     await expect(apiRequest("/events/999999")).rejects.toThrow("API error 404");
   });
+
 });
 
 // ── Tool Handlers ────────────────────────────────────────────────────────────

@@ -40,8 +40,12 @@ async function apiRequest(
   params: Record<string, ParamValue> = {},
   method: "GET" | "PUT" = "GET",
 ): Promise<unknown> {
+  if (!API_KEY) {
+    throw new Error("ODDS_API_KEY environment variable is not set");
+  }
+
   const url = new URL(`${API_BASE_URL}${endpoint}`);
-  url.searchParams.set("apiKey", API_KEY!);
+  url.searchParams.set("apiKey", API_KEY);
 
   for (const [key, value] of Object.entries(params)) {
     if (value !== undefined) {
@@ -605,7 +609,7 @@ const tools: ToolDefinition[] = [
 const toolMap = new Map(tools.map((tool) => [tool.name, tool]));
 
 const server = new Server(
-  { name: "odds-api-mcp", version: "1.0.1" },
+  { name: "odds-api-mcp", version: "1.1.0" },
   { capabilities: { tools: {}, resources: {} } },
 );
 
