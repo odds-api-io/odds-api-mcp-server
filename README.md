@@ -4,11 +4,11 @@ Model Context Protocol (MCP) server for [Odds-API.io](https://odds-api.io) - pro
 
 ## Features
 
-- **12 API tools** for fetching sports, bookmakers, events, odds, value bets, and arbitrage opportunities
+- **21 API tools** covering the full Odds-API.io v3 surface: sports, events, odds, historical data, value bets, arbitrage, and more
 - **Documentation resources** for AI context
-- **Real-time data** from 265 bookmakers across 34 sports
+- **Real-time data** from 265+ bookmakers across 34 sports
 
-## Installation
+## Quick Start
 
 ### Claude Code CLI
 
@@ -16,32 +16,9 @@ Model Context Protocol (MCP) server for [Odds-API.io](https://odds-api.io) - pro
 claude mcp add odds-api --env ODDS_API_KEY="your-api-key" -- npx -y odds-api-mcp-server
 ```
 
-### Manual Installation
-
-```bash
-npm install -g odds-api-mcp-server
-```
-
-### From Source
-
-```bash
-git clone https://github.com/odds-api-io/odds-api-mcp-server
-cd odds-api-mcp-server
-npm install
-npm run build
-```
-
-## Configuration
-
-### Environment Variables
-
-- `ODDS_API_KEY` (required): Your Odds-API.io API key
-
-Get your API key at [odds-api.io](https://odds-api.io).
-
 ### Claude Desktop
 
-Add to your Claude Desktop config (`~/.config/claude/claude_desktop_config.json` on macOS/Linux or `%APPDATA%\Claude\claude_desktop_config.json` on Windows):
+Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS, `%APPDATA%\Claude\claude_desktop_config.json` on Windows):
 
 ```json
 {
@@ -59,65 +36,144 @@ Add to your Claude Desktop config (`~/.config/claude/claude_desktop_config.json`
 
 ### Cursor
 
-Add to your Cursor MCP settings:
+Add to your Cursor MCP settings (`.cursor/mcp.json` in your project or global config):
 
 ```json
 {
-  "odds-api": {
-    "command": "npx",
-    "args": ["-y", "odds-api-mcp-server"],
-    "env": {
-      "ODDS_API_KEY": "your-api-key"
+  "mcpServers": {
+    "odds-api": {
+      "command": "npx",
+      "args": ["-y", "odds-api-mcp-server"],
+      "env": {
+        "ODDS_API_KEY": "your-api-key"
+      }
     }
   }
 }
 ```
 
+### VS Code
+
+Add to your VS Code settings (`.vscode/mcp.json`):
+
+```json
+{
+  "servers": {
+    "odds-api": {
+      "command": "npx",
+      "args": ["-y", "odds-api-mcp-server"],
+      "env": {
+        "ODDS_API_KEY": "your-api-key"
+      }
+    }
+  }
+}
+```
+
+### Global Install (alternative)
+
+```bash
+npm install -g odds-api-mcp-server
+```
+
+Then use `odds-api-mcp` as the command instead of `npx -y odds-api-mcp-server`.
+
+## Configuration
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `ODDS_API_KEY` | Yes | Your API key from [odds-api.io](https://odds-api.io) |
+
 ## Available Tools
+
+### Sports & Leagues
 
 | Tool | Description |
 |------|-------------|
-| `get_sports` | List all available sports |
-| `get_bookmakers` | List all available bookmakers |
-| `get_leagues` | Get leagues for a sport |
-| `get_events` | Get events with filtering options |
+| `get_sports` | List all available sports with slugs |
+| `get_leagues` | Get leagues for a sport (with optional `all` flag for inactive leagues) |
+
+### Bookmakers
+
+| Tool | Description |
+|------|-------------|
+| `get_bookmakers` | List all supported bookmakers |
+| `get_selected_bookmakers` | Get your currently selected bookmakers |
+| `select_bookmakers` | Add bookmakers to your selection |
+| `clear_selected_bookmakers` | Clear all selected bookmakers (once per 12h) |
+
+### Events
+
+| Tool | Description |
+|------|-------------|
+| `get_events` | Get events with filtering (league, status, date range, participant, bookmaker, pagination) |
+| `get_event` | Get a single event by ID |
 | `get_live_events` | Get currently live events |
-| `search_events` | Search events by text |
-| `get_odds` | Get odds for an event |
-| `get_multi_odds` | Get odds for multiple events (batch) |
-| `get_value_bets` | Get value betting opportunities |
-| `get_arbitrage_bets` | Get arbitrage opportunities |
-| `get_participants` | Get teams/participants |
-| `get_documentation` | Get API documentation |
+| `search_events` | Search events by team name or text |
 
-## Available Resources
+### Odds
 
-| Resource | Description |
-|----------|-------------|
-| `odds-api://documentation` | Full API documentation |
-| `odds-api://openapi` | OpenAPI specification |
+| Tool | Description |
+|------|-------------|
+| `get_odds` | Get odds for an event from selected bookmakers |
+| `get_multi_odds` | Get odds for up to 10 events in one call |
+| `get_odds_movements` | Get historical line movements for a market |
+| `get_updated_odds` | Get recently changed odds (polling) |
+
+### Historical
+
+| Tool | Description |
+|------|-------------|
+| `get_historical_events` | Get finished events for a sport/league/date range |
+| `get_historical_odds` | Get closing odds and scores for finished events |
+
+### Betting Analytics
+
+| Tool | Description |
+|------|-------------|
+| `get_value_bets` | Get positive EV opportunities for a bookmaker |
+| `get_arbitrage_bets` | Get arbitrage opportunities with optimal stakes |
+
+### Participants
+
+| Tool | Description |
+|------|-------------|
+| `get_participants` | Get teams/participants for a sport |
+| `get_participant` | Get a single participant by ID |
+
+### Reference
+
+| Tool | Description |
+|------|-------------|
+| `get_documentation` | Fetch full API documentation |
+
+## Resources
+
+| Resource URI | Description |
+|-------------|-------------|
+| `odds-api://documentation` | Complete API documentation |
+| `odds-api://openapi` | OpenAPI/Swagger specification |
 
 ## Example Usage
 
-Once configured, you can ask your AI assistant:
+Once configured, ask your AI assistant things like:
 
-- "Get me the list of available sports"
+- "What sports are available on Odds-API?"
 - "Show me upcoming Premier League matches"
-- "Find value bets for Bet365 with expected value above 3%"
-- "Search for events involving Liverpool"
-- "Get odds for event 123456 from Pinnacle and Bet365"
+- "Get odds for the next Arsenal match from Bet365 and Pinnacle"
+- "Find value bets on Bet365 with event details"
+- "Are there any arbitrage opportunities between Bet365 and Unibet?"
+- "Show me how the odds moved for event 12345 on the spread market"
+- "Get historical results for La Liga in January 2026"
 
 ## Development
 
 ```bash
-# Install dependencies
+git clone https://github.com/odds-api-io/odds-api-mcp-server
+cd odds-api-mcp-server
 npm install
-
-# Build
 npm run build
-
-# Run in development mode
-npm run dev
+npm test
 ```
 
 ## License
@@ -127,5 +183,6 @@ MIT
 ## Links
 
 - [Odds-API.io](https://odds-api.io) - Main website
-- [Documentation](https://docs.odds-api.io) - API documentation
-- [Support](mailto:hello@odds-api.io) - Email support
+- [Documentation](https://docs.odds-api.io) - API docs
+- [API Reference](https://api.odds-api.io/v3/docs/index.html) - Swagger/OpenAPI
+- [npm](https://www.npmjs.com/package/odds-api-mcp-server) - Package registry
