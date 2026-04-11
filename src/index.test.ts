@@ -63,6 +63,7 @@ describe("Tool Registry", () => {
     "get_multi_odds",
     "get_odds_movements",
     "get_updated_odds",
+    "get_dropping_odds",
     "get_historical_events",
     "get_historical_odds",
     "get_value_bets",
@@ -72,8 +73,8 @@ describe("Tool Registry", () => {
     "get_documentation",
   ];
 
-  it("has all 21 tools registered", () => {
-    expect(tools).toHaveLength(21);
+  it("has all 22 tools registered", () => {
+    expect(tools).toHaveLength(22);
   });
 
   it("has no duplicate tool names", () => {
@@ -134,6 +135,7 @@ describe("Tool Schemas - Required Parameters", () => {
     ["get_multi_odds", ["eventIds", "bookmakers"]],
     ["get_odds_movements", ["eventId", "bookmaker", "market"]],
     ["get_updated_odds", ["since", "bookmaker", "sport"]],
+    ["get_dropping_odds", []],
     ["get_historical_events", ["sport", "league", "from", "to"]],
     ["get_historical_odds", ["eventId", "bookmakers"]],
     ["get_value_bets", ["bookmaker"]],
@@ -457,6 +459,58 @@ describe("Tool Handlers", () => {
     const calledUrl = new URL(fetchMock.mock.calls[0][0]);
     expect(calledUrl.pathname).toBe("/v3/odds/updated");
     expect(calledUrl.searchParams.get("since")).toBe(String(since));
+  });
+
+  it("get_dropping_odds passes all optional params", async () => {
+    const fetchMock = mockFetchJson([]);
+    globalThis.fetch = fetchMock;
+
+    await toolMap.get("get_dropping_odds")!.handler({
+      sport: "football",
+      league: "england-premier-league",
+      market: "ML",
+      timeWindow: "12h",
+      minDrop: 5,
+      limit: 100,
+      page: 2,
+      includeEventDetails: true,
+    });
+
+    const calledUrl = new URL(fetchMock.mock.calls[0][0]);
+    expect(calledUrl.pathname).toBe("/v3/dropping-odds");
+    expect(calledUrl.searchParams.get("sport")).toBe("football");
+    expect(calledUrl.searchParams.get("league")).toBe("england-premier-league");
+    expect(calledUrl.searchParams.get("market")).toBe("ML");
+    expect(calledUrl.searchParams.get("timeWindow")).toBe("12h");
+    expect(calledUrl.searchParams.get("minDrop")).toBe("5");
+    expect(calledUrl.searchParams.get("limit")).toBe("100");
+    expect(calledUrl.searchParams.get("page")).toBe("2");
+    expect(calledUrl.searchParams.get("includeEventDetails")).toBe("true");
+  });
+
+  it("get_dropping_odds sends includeEventDetails only when true", async () => {
+    const fetchMock = mockFetchJson([]);
+    globalThis.fetch = fetchMock;
+
+    await toolMap.get("get_dropping_odds")!.handler({ includeEventDetails: false });
+    const url = new URL(fetchMock.mock.calls[0][0]);
+    expect(url.searchParams.has("includeEventDetails")).toBe(false);
+
+    await toolMap.get("get_dropping_odds")!.handler({});
+    const url2 = new URL(fetchMock.mock.calls[1][0]);
+    expect(url2.searchParams.has("includeEventDetails")).toBe(false);
+  });
+
+  it("get_dropping_odds works with no params", async () => {
+    const fetchMock = mockFetchJson([]);
+    globalThis.fetch = fetchMock;
+
+    await toolMap.get("get_dropping_odds")!.handler({});
+
+    const calledUrl = new URL(fetchMock.mock.calls[0][0]);
+    expect(calledUrl.pathname).toBe("/v3/dropping-odds");
+    expect(calledUrl.searchParams.has("sport")).toBe(false);
+    expect(calledUrl.searchParams.has("league")).toBe(false);
   });
 
   it("get_historical_events passes all required params", async () => {
