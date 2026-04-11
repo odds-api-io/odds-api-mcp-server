@@ -408,6 +408,77 @@ const tools: ToolDefinition[] = [
     },
   },
 
+  // ── Dropping Odds ───────────────────────────────────────────────
+
+  {
+    name: "get_dropping_odds",
+    description:
+      "Get odds that have dropped the most from opening, based on sharp bookmaker data. Useful for tracking where sharp money is moving. Updated every ~10 seconds. Only available on paid plans.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        sport: {
+          type: "string",
+          description: "Sport slug to filter by (e.g., 'football', 'basketball')",
+        },
+        league: {
+          type: "string",
+          description: "League slug to filter by (e.g., 'england-premier-league'). Requires sport to also be set.",
+        },
+        market: {
+          type: "string",
+          description: "Market type to filter by: 'ML', 'Spread', or 'Totals'",
+        },
+        timeWindow: {
+          type: "string",
+          description: "Time window for drop calculation and sorting: 'opening', '12h', '24h', '48h' (default: 'opening')",
+        },
+        minDrop: {
+          type: "number",
+          description: "Minimum drop percentage threshold (default: 0)",
+        },
+        limit: {
+          type: "number",
+          description: "Results per page, 1-200 (default: 50)",
+        },
+        page: {
+          type: "number",
+          description: "Page number, 1-indexed (default: 1)",
+        },
+        includeEventDetails: {
+          type: "boolean",
+          description: "Include expanded event details (home, away, date, sport, league) in response",
+        },
+      },
+      required: [],
+    },
+    async handler(args) {
+      const { sport, league, market, timeWindow, minDrop, limit, page, includeEventDetails } =
+        args as {
+          sport?: string;
+          league?: string;
+          market?: string;
+          timeWindow?: string;
+          minDrop?: number;
+          limit?: number;
+          page?: number;
+          includeEventDetails?: boolean;
+        };
+      return jsonResponse(
+        await apiRequest("/dropping-odds", {
+          sport,
+          league,
+          market,
+          timeWindow,
+          minDrop,
+          limit,
+          page,
+          includeEventDetails: includeEventDetails || undefined,
+        }),
+      );
+    },
+  },
+
   // ── Historical ──────────────────────────────────────────────────
 
   {
