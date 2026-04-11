@@ -1,6 +1,6 @@
 {
   "name": "odds-api-mcp-server",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "MCP server for Odds-API.io - Access sports betting odds data from AI tools like Claude, Cursor, and VS Code",
   "type": "module",
   "main": "dist/index.js",
