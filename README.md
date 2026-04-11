@@ -160,7 +160,7 @@ Once configured, ask your AI assistant things like:
 
 - "What sports are available on Odds-API?"
 - "Show me upcoming Premier League matches"
-- "Get odds for the next Arsenal match from Bet365 and Pinnacle"
+- "Get odds for the next Arsenal match from Bet365 and SingBet"
 - "Find value bets on Bet365 with event details"
 - "Are there any arbitrage opportunities between Bet365 and Unibet?"
 - "Show me how the odds moved for event 12345 on the spread market"
@@ -185,4 +185,6 @@ MIT
 - [Odds-API.io](https://odds-api.io) - Main website
 - [Documentation](https://docs.odds-api.io) - API docs
 - [API Reference](https://api.odds-api.io/v3/docs/index.html) - Swagger/OpenAPI
+- [npm](https://www.npmjs.com/package/odds-api-mcp-server) - Package registry
+ndex.html) - Swagger/OpenAPI
 - [npm](https://www.npmjs.com/package/odds-api-mcp-server) - Package registry
