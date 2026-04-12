@@ -1,0 +1,68 @@
+{
+  "manifest_version": "0.3",
+  "name": "odds-api",
+  "display_name": "Odds-API.io",
+  "version": "1.2.0",
+  "description": "Real-time sports betting odds from 250+ bookmakers. Fetch odds, find value bets, spot arbitrage opportunities, and track dropping odds across 20+ sports.",
+  "long_description": "Connect Claude to the Odds-API.io platform for real-time sports betting data.\n\nFetch live and pre-match odds from 250+ bookmakers across football, basketball, tennis, baseball, ice hockey, and 15+ more sports. Compare odds, find value bets backed by sharp bookmaker consensus, discover arbitrage opportunities, and track dropping odds to see where the smart money is moving.\n\nIncludes tools for events, odds, historical data, value bets, arbitrage detection, and dropping odds.\n\nRequires an API key from odds-api.io (free tier available).",
+  "author": {
+    "name": "Odds-API.io",
+    "email": "hello@odds-api.io",
+    "url": "https://odds-api.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/odds-api-io/odds-api-mcp-server.git"
+  },
+  "homepage": "https://odds-api.io",
+  "documentation": "https://docs.odds-api.io",
+  "support": "https://github.com/odds-api-io/odds-api-mcp-server/issues",
+  "license": "MIT",
+  "keywords": ["sports", "betting", "odds", "football", "basketball", "arbitrage", "value-bets", "bookmakers"],
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/index.js"],
+      "env": {
+        "ODDS_API_KEY": "${user_config.api_key}"
+      }
+    }
+  },
+  "tools": [
+    { "name": "get_sports", "description": "List all available sports" },
+    { "name": "get_bookmakers", "description": "List all active bookmakers" },
+    { "name": "get_leagues", "description": "Get leagues for a sport" },
+    { "name": "get_events", "description": "Get upcoming events with filters" },
+    { "name": "get_live_events", "description": "Get currently live events with scores" },
+    { "name": "search_events", "description": "Search events by team name" },
+    { "name": "get_odds", "description": "Get odds for an event from selected bookmakers" },
+    { "name": "get_multi_odds", "description": "Get odds for multiple events in one call" },
+    { "name": "get_odds_movements", "description": "Get historical odds movements for an event" },
+    { "name": "get_updated_odds", "description": "Get recently updated odds across all events" },
+    { "name": "get_dropping_odds", "description": "Find odds that have dropped significantly from sharp bookmakers" },
+    { "name": "get_historical_events", "description": "Get past events for a sport and league" },
+    { "name": "get_historical_odds", "description": "Get closing odds for a finished event" },
+    { "name": "get_value_bets", "description": "Find value bets based on sharp bookmaker consensus" },
+    { "name": "get_arbitrage_bets", "description": "Find arbitrage opportunities across bookmakers" },
+    { "name": "get_selected_bookmakers", "description": "View your currently selected bookmakers" },
+    { "name": "select_bookmakers", "description": "Set your active bookmaker selection" },
+    { "name": "clear_selected_bookmakers", "description": "Reset bookmaker selection to default" }
+  ],
+  "user_config": {
+    "api_key": {
+      "type": "string",
+      "title": "API Key",
+      "description": "Your Odds-API.io API key. Get one free at odds-api.io",
+      "sensitive": true,
+      "required": true
+    }
+  },
+  "compatibility": {
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  }
+}
