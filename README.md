@@ -4,11 +4,15 @@ Model Context Protocol (MCP) server for [Odds-API.io](https://odds-api.io) - pro
 
 ## Features
 
-- **21 API tools** covering the full Odds-API.io v3 surface: sports, events, odds, historical data, value bets, arbitrage, and more
+- **22 API tools** covering the full Odds-API.io v3 surface: sports, events, odds, historical data, value bets, arbitrage, dropping odds, and more
 - **Documentation resources** for AI context
 - **Real-time data** from 265+ bookmakers across 34 sports
 
 ## Quick Start
+
+### One-Click Install (Claude Desktop)
+
+Download the latest `.mcpb` file from [Releases](https://github.com/odds-api-io/odds-api-mcp-server/releases/latest) and open it. Claude Desktop will prompt you for your API key.
 
 ### Claude Code CLI
 
@@ -133,6 +137,7 @@ Then use `odds-api-mcp` as the command instead of `npx -y odds-api-mcp-server`.
 |------|-------------|
 | `get_value_bets` | Get positive EV opportunities for a bookmaker |
 | `get_arbitrage_bets` | Get arbitrage opportunities with optimal stakes |
+| `get_dropping_odds` | Track sharp bookmaker line movements by sport, league, market, and time window |
 
 ### Participants
 
@@ -165,6 +170,8 @@ Once configured, ask your AI assistant things like:
 - "Are there any arbitrage opportunities between Bet365 and Unibet?"
 - "Show me how the odds moved for event 12345 on the spread market"
 - "Get historical results for La Liga in January 2026"
+- "Show me the biggest dropping odds in football right now"
+- "What Premier League odds have dropped the most in the last 12 hours?"
 
 ## Development
 
@@ -185,6 +192,4 @@ MIT
 - [Odds-API.io](https://odds-api.io) - Main website
 - [Documentation](https://docs.odds-api.io) - API docs
 - [API Reference](https://api.odds-api.io/v3/docs/index.html) - Swagger/OpenAPI
-- [npm](https://www.npmjs.com/package/odds-api-mcp-server) - Package registry
-ndex.html) - Swagger/OpenAPI
 - [npm](https://www.npmjs.com/package/odds-api-mcp-server) - Package registry
