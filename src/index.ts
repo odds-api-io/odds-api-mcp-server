@@ -413,7 +413,7 @@ const tools: ToolDefinition[] = [
   {
     name: "get_dropping_odds",
     description:
-      "Get odds that have dropped the most from opening, based on sharp bookmaker data. Useful for tracking where sharp money is moving. Updated every ~10 seconds. Only available on paid plans.",
+      "Get odds that have dropped the most from opening, based on sharp bookmaker data. Useful for tracking where sharp money is moving. Updated every ~10 seconds. Only available on paid plans. Response includes drop percentages for multiple time windows (sinceOpening, 12h, 24h, 48h).",
     inputSchema: {
       type: "object",
       properties: {
@@ -427,11 +427,16 @@ const tools: ToolDefinition[] = [
         },
         market: {
           type: "string",
-          description: "Market type to filter by: 'ML', 'Spread', or 'Totals'",
+          description:
+            "Market name to filter by (case-insensitive). Supported: ML, Spread, Totals, Spread HT, Totals HT, Totals 1Q, Spread 1Q, Team Total Home, Team Total Away, Corners Spread, Corners Totals, Corners Spread HT, Corners Totals HT, Bookings Spread, Bookings Totals, Player Props",
         },
         timeWindow: {
           type: "string",
-          description: "Time window for drop calculation and sorting: 'opening', '12h', '24h', '48h' (default: 'opening')",
+          description: "Time window for drop filtering and sorting: 'opening', '12h', '24h', '48h' (default: 'opening')",
+        },
+        sort: {
+          type: "string",
+          description: "Sort order: 'drop' (highest drop %), 'recent' (latest movement), 'kickoff' (soonest event). Default: 'drop'",
         },
         minDrop: {
           type: "number",
@@ -453,12 +458,13 @@ const tools: ToolDefinition[] = [
       required: [],
     },
     async handler(args) {
-      const { sport, league, market, timeWindow, minDrop, limit, page, includeEventDetails } =
+      const { sport, league, market, timeWindow, sort, minDrop, limit, page, includeEventDetails } =
         args as {
           sport?: string;
           league?: string;
           market?: string;
           timeWindow?: string;
+          sort?: string;
           minDrop?: number;
           limit?: number;
           page?: number;
@@ -470,6 +476,7 @@ const tools: ToolDefinition[] = [
           league,
           market,
           timeWindow,
+          sort,
           minDrop,
           limit,
           page,
@@ -680,7 +687,7 @@ const tools: ToolDefinition[] = [
 const toolMap = new Map(tools.map((tool) => [tool.name, tool]));
 
 const server = new Server(
-  { name: "odds-api-mcp", version: "1.1.1" },
+  { name: "odds-api-mcp", version: "1.3.0" },
   { capabilities: { tools: {}, resources: {} } },
 );
 
