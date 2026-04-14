@@ -5,9 +5,7 @@
 			"command": "uvx",
 			"args": [
 				"markitdown-mcp@0.0.1a4"
-			],
-			"gallery": "https://api.mcp.github.com",
-			"version": "1.0.0"
+			]
 		},
 		"io.github.github/github-mcp-server": {
 			"type": "stdio",
@@ -19,9 +17,7 @@
 				"-e",
 				"GITHUB_PERSONAL_ACCESS_TOKEN=${input:token}",
 				"ghcr.io/github/github-mcp-server:0.33.0"
-			],
-			"gallery": "https://api.mcp.github.com",
-			"version": "0.33.0"
+			]
 		},
 		"io.github.ChromeDevTools/chrome-devtools-mcp": {
 			"type": "stdio",
@@ -30,9 +26,7 @@
 				"--registry",
 				"https://registry.npmjs.org",
 				"chrome-devtools-mcp@0.21.0"
-			],
-			"gallery": "https://api.mcp.github.com",
-			"version": "0.21.0"
+			]
 		},
 		"microsoft/azure-devops-mcp": {
 			"type": "stdio",
@@ -43,9 +37,7 @@
 				"${input:ado_org}",
 				"-d",
 				"${input:ado_domain}"
-			],
-			"gallery": "https://api.mcp.github.com",
-			"version": "1.0.0"
+			]
 		},
 		"my-mcp-server-fce093e7": {
 			"type": "stdio",
