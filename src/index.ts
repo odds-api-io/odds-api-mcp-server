@@ -413,7 +413,7 @@ const tools: ToolDefinition[] = [
   {
     name: "get_dropping_odds",
     description:
-      "Get odds that have dropped the most from opening, based on sharp bookmaker data. Useful for tracking where sharp money is moving. Updated every ~10 seconds. Only available on paid plans. Response includes drop percentages for multiple time windows (sinceOpening, 12h, 24h, 48h).",
+      "Get odds that have dropped the most from opening, based on sharp bookmaker data. Useful for tracking where sharp money is moving. Updated every ~10 seconds. Only available on paid plans. Response includes drop percentages for multiple time windows (sinceOpening, 12h, 24h, 48h). For player prop markets, the response includes market.label with the player name (e.g. 'Carlos Baleba'). Use market=Player Props to get all player prop markets across all sports (football includes Anytime Goalscorer, Player Passes, Player Shots, Player Shots on Target, etc.).",
     inputSchema: {
       type: "object",
       properties: {
@@ -423,12 +423,16 @@ const tools: ToolDefinition[] = [
         },
         league: {
           type: "string",
-          description: "League slug to filter by (e.g., 'england-premier-league'). Requires sport to also be set.",
+          description: "Single league slug to filter by (e.g., 'england-premier-league'). Requires sport. Mutually exclusive with leagues.",
+        },
+        leagues: {
+          type: "string",
+          description: "Comma-separated league slugs to filter by multiple leagues (e.g., 'england-premier-league,spain-la-liga'). Mutually exclusive with league.",
         },
         market: {
           type: "string",
           description:
-            "Market name to filter by (case-insensitive). Supported: ML, Spread, Totals, Spread HT, Totals HT, Totals 1Q, Spread 1Q, Team Total Home, Team Total Away, Corners Spread, Corners Totals, Corners Spread HT, Corners Totals HT, Bookings Spread, Bookings Totals, Player Props",
+            "Market name to filter by (case-insensitive). Supported: ML, Spread, Totals, Spread HT, Totals HT, Totals 1Q, Spread 1Q, Team Total Home, Team Total Away, Corners Spread, Corners Totals, Corners Spread HT, Corners Totals HT, Bookings Spread, Bookings Totals, Player Props. Note: 'Player Props' returns all player prop markets across all sports.",
         },
         timeWindow: {
           type: "string",
@@ -458,10 +462,11 @@ const tools: ToolDefinition[] = [
       required: [],
     },
     async handler(args) {
-      const { sport, league, market, timeWindow, sort, minDrop, limit, page, includeEventDetails } =
+      const { sport, league, leagues, market, timeWindow, sort, minDrop, limit, page, includeEventDetails } =
         args as {
           sport?: string;
           league?: string;
+          leagues?: string;
           market?: string;
           timeWindow?: string;
           sort?: string;
@@ -474,6 +479,7 @@ const tools: ToolDefinition[] = [
         await apiRequest("/dropping-odds", {
           sport,
           league,
+          leagues,
           market,
           timeWindow,
           sort,
@@ -687,7 +693,7 @@ const tools: ToolDefinition[] = [
 const toolMap = new Map(tools.map((tool) => [tool.name, tool]));
 
 const server = new Server(
-  { name: "odds-api-mcp", version: "1.3.0" },
+  { name: "odds-api-mcp", version: "1.4.0" },
   { capabilities: { tools: {}, resources: {} } },
 );
 
