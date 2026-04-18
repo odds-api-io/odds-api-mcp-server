@@ -413,13 +413,13 @@ const tools: ToolDefinition[] = [
   {
     name: "get_dropping_odds",
     description:
-      "Get odds that have dropped the most from opening, based on sharp bookmaker data. Useful for tracking where sharp money is moving. Updated every ~10 seconds. Only available on paid plans. Response includes drop percentages for multiple time windows (sinceOpening, 12h, 24h, 48h). For player prop markets, the response includes market.label with the player name (e.g. 'Carlos Baleba'). Use markets=Player Props to get all player prop markets across all sports (football includes Anytime Goalscorer, Player Passes, Player Shots, Player Shots on Target, etc.).",
+      "Get odds that have dropped the most from opening, based on sharp bookmaker data. Useful for tracking where sharp money is moving. Updated every ~10 seconds. Only available on paid plans. Response includes drop percentages for multiple time windows (sinceOpening, 12h, 24h, 48h). For player prop markets, the response includes market.label with the player name (e.g. 'Carlos Baleba'). Use markets=Player Props to get all player prop markets across all sports (football includes Anytime Goalscorer, Player Passes, Player Shots, Player Shots on Target, etc.). IMPORTANT: Always pass the sport parameter when the user mentions or implies a specific sport — the global (no-sport) endpoint is heavily dominated by player props and will return very few main market results.",
     inputSchema: {
       type: "object",
       properties: {
         sport: {
           type: "string",
-          description: "Sport slug to filter by (e.g., 'football', 'basketball')",
+          description: "Sport slug to filter by (e.g., 'football', 'basketball'). Always include this when the user mentions a sport — without it, results are dominated by player props and main market drops are hidden.",
         },
         league: {
           type: "string",
@@ -693,7 +693,7 @@ const tools: ToolDefinition[] = [
 const toolMap = new Map(tools.map((tool) => [tool.name, tool]));
 
 const server = new Server(
-  { name: "odds-api-mcp", version: "1.5.0" },
+  { name: "odds-api-mcp", version: "1.5.1" },
   { capabilities: { tools: {}, resources: {} } },
 );
 
