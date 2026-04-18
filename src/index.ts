@@ -413,7 +413,7 @@ const tools: ToolDefinition[] = [
   {
     name: "get_dropping_odds",
     description:
-      "Get odds that have dropped the most from opening, based on sharp bookmaker data. Useful for tracking where sharp money is moving. Updated every ~10 seconds. Only available on paid plans. Response includes drop percentages for multiple time windows (sinceOpening, 12h, 24h, 48h). For player prop markets, the response includes market.label with the player name (e.g. 'Carlos Baleba'). Use market=Player Props to get all player prop markets across all sports (football includes Anytime Goalscorer, Player Passes, Player Shots, Player Shots on Target, etc.).",
+      "Get odds that have dropped the most from opening, based on sharp bookmaker data. Useful for tracking where sharp money is moving. Updated every ~10 seconds. Only available on paid plans. Response includes drop percentages for multiple time windows (sinceOpening, 12h, 24h, 48h). For player prop markets, the response includes market.label with the player name (e.g. 'Carlos Baleba'). Use markets=Player Props to get all player prop markets across all sports (football includes Anytime Goalscorer, Player Passes, Player Shots, Player Shots on Target, etc.).",
     inputSchema: {
       type: "object",
       properties: {
@@ -427,12 +427,12 @@ const tools: ToolDefinition[] = [
         },
         leagues: {
           type: "string",
-          description: "Comma-separated league slugs to filter by multiple leagues (e.g., 'england-premier-league,spain-la-liga'). Mutually exclusive with league.",
+          description: "Comma-separated league slugs to filter by multiple leagues (e.g., 'england-premier-league,spain-la-liga'). Mutually exclusive with league. When used with sport, fetches full per-league data instead of the pre-truncated global snapshot.",
         },
-        market: {
+        markets: {
           type: "string",
           description:
-            "Market name to filter by (case-insensitive). Supported: ML, Spread, Totals, Spread HT, Totals HT, Totals 1Q, Spread 1Q, Team Total Home, Team Total Away, Corners Spread, Corners Totals, Corners Spread HT, Corners Totals HT, Bookings Spread, Bookings Totals, Player Props. Note: 'Player Props' returns all player prop markets across all sports.",
+            "Comma-separated market names to filter by (case-insensitive). e.g. 'ML,Spread,Totals'. Supported: ML, Spread, Totals, Spread HT, Totals HT, Totals 1Q, Spread 1Q, Team Total Home, Team Total Away, Corners Spread, Corners Totals, Corners Spread HT, Corners Totals HT, Bookings Spread, Bookings Totals, Player Props. Note: 'Player Props' returns all player prop markets across all sports.",
         },
         timeWindow: {
           type: "string",
@@ -462,12 +462,12 @@ const tools: ToolDefinition[] = [
       required: [],
     },
     async handler(args) {
-      const { sport, league, leagues, market, timeWindow, sort, minDrop, limit, page, includeEventDetails } =
+      const { sport, league, leagues, markets, timeWindow, sort, minDrop, limit, page, includeEventDetails } =
         args as {
           sport?: string;
           league?: string;
           leagues?: string;
-          market?: string;
+          markets?: string;
           timeWindow?: string;
           sort?: string;
           minDrop?: number;
@@ -480,7 +480,7 @@ const tools: ToolDefinition[] = [
           sport,
           league,
           leagues,
-          market,
+          markets,
           timeWindow,
           sort,
           minDrop,
@@ -693,7 +693,7 @@ const tools: ToolDefinition[] = [
 const toolMap = new Map(tools.map((tool) => [tool.name, tool]));
 
 const server = new Server(
-  { name: "odds-api-mcp", version: "1.4.0" },
+  { name: "odds-api-mcp", version: "1.5.0" },
   { capabilities: { tools: {}, resources: {} } },
 );
 
