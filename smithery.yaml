@@ -1,0 +1,16 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - apiKey
+    properties:
+      apiKey:
+        type: string
+        description: Odds-API.io API key (free tier available at odds-api.io, no credit card)
+  commandFunction: |-
+    (config) => ({
+      command: "npx",
+      args: ["-y", "odds-api-mcp-server"],
+      env: { ODDS_API_KEY: config.apiKey }
+    })
