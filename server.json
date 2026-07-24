@@ -1,8 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
   "name": "io.github.odds-api-io/odds-api-mcp-server",
-  "description": "Live sports betting odds from 265+ bookmakers across 34 sports: odds, events, results, value bets and arbitrage, direct from Odds-API.io.",
-  "version": "1.5.1",
+  "description": "Live sports betting odds from 265+ bookmakers across 34 sports, with value bets and arbitrage.",
+  "version": "1.5.2",
   "websiteUrl": "https://docs.odds-api.io/ai-vibe-coding",
   "repository": {
     "url": "https://github.com/odds-api-io/odds-api-mcp-server",
@@ -12,7 +12,7 @@
     {
       "registryType": "npm",
       "identifier": "odds-api-mcp-server",
-      "version": "1.5.1",
+      "version": "1.5.2",
       "transport": {
         "type": "stdio"
       },
