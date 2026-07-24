@@ -22,7 +22,10 @@
     "odds",
     "ai",
     "claude",
-    "cursor"
+    "cursor",
+    "betting-odds",
+    "sports-data",
+    "arbitrage"
   ],
   "author": "Odds-API.io",
   "license": "MIT",
