@@ -1,6 +1,10 @@
 # Odds-API.io MCP Server
 
+[![npm version](https://img.shields.io/npm/v/odds-api-mcp-server)](https://www.npmjs.com/package/odds-api-mcp-server) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Model Context Protocol (MCP) server for [Odds-API.io](https://odds-api.io) - providing AI tools like Claude, Cursor, and VS Code with direct access to sports betting odds data.
+
+Full AI-tooling docs: [docs.odds-api.io/ai-vibe-coding](https://docs.odds-api.io/ai-vibe-coding)
 
 ## Features
 
