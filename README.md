@@ -10,7 +10,7 @@ Full AI-tooling docs: [docs.odds-api.io/ai-vibe-coding](https://docs.odds-api.io
 
 - **22 API tools** covering the full Odds-API.io v3 surface: sports, events, odds, historical data, value bets, arbitrage, dropping odds, and more
 - **Documentation resources** for AI context
-- **Real-time data** from 265+ bookmakers across 34 sports
+- **Real-time data** from 365+ bookmakers across 34 sports
 
 ## Quick Start
 
