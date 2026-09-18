@@ -5,7 +5,7 @@ MCP server that gives Claude, Cursor, VS Code and other AI tools direct access t
 The server speaks MCP over stdio, so run it with `-i` and pass your API key as an environment variable:
 
 ```bash
-docker run -i --rm -e ODDS_API_KEY=your-api-key oddsapiio/odds-api-mcp-server
+docker run -i --rm -e ODDS_API_KEY=your-api-key oddsapi/odds-api-mcp-server
 ```
 
 Get a key at https://odds-api.io.
@@ -19,7 +19,7 @@ Add to `claude_desktop_config.json` (`~/Library/Application Support/Claude/` on 
   "mcpServers": {
     "odds-api": {
       "command": "docker",
-      "args": ["run", "-i", "--rm", "-e", "ODDS_API_KEY", "oddsapiio/odds-api-mcp-server"],
+      "args": ["run", "-i", "--rm", "-e", "ODDS_API_KEY", "oddsapi/odds-api-mcp-server"],
       "env": {
         "ODDS_API_KEY": "your-api-key"
       }
@@ -37,7 +37,7 @@ Add the same block to `.cursor/mcp.json` in your project or your global Cursor M
   "mcpServers": {
     "odds-api": {
       "command": "docker",
-      "args": ["run", "-i", "--rm", "-e", "ODDS_API_KEY", "oddsapiio/odds-api-mcp-server"],
+      "args": ["run", "-i", "--rm", "-e", "ODDS_API_KEY", "oddsapi/odds-api-mcp-server"],
       "env": {
         "ODDS_API_KEY": "your-api-key"
       }
