@@ -1,4 +1,4 @@
-MCP server that gives Claude, Cursor, VS Code and other AI tools direct access to real-time sports betting odds from Odds-API.io: 265+ bookmakers, 34 sports, 12,000+ leagues, plus value bets, arbitrage and dropping odds.
+MCP server that gives Claude, Cursor, VS Code and other AI tools direct access to real-time sports betting odds from Odds-API.io: 365+ bookmakers, 34 sports, 12,000+ leagues, plus value bets, arbitrage and dropping odds.
 
 ## Quick start
 

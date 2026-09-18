@@ -3,8 +3,8 @@
   "name": "odds-api",
   "display_name": "Odds-API.io",
   "version": "1.5.1",
-  "description": "Real-time sports betting odds from 265+ bookmakers. Fetch odds, find value bets, spot arbitrage opportunities, and track dropping odds across 34 sports.",
-  "long_description": "Connect Claude to the Odds-API.io platform for real-time sports betting data.\n\nFetch live and pre-match odds from 265+ bookmakers across football, basketball, tennis, baseball, ice hockey, and 29 more sports. Compare odds, find value bets backed by sharp bookmaker consensus, discover arbitrage opportunities, and track dropping odds to see where the smart money is moving.\n\nIncludes tools for events, odds, historical data, value bets, arbitrage detection, and dropping odds.\n\nRequires an API key from odds-api.io (free tier available).",
+  "description": "Real-time sports betting odds from 365+ bookmakers. Fetch odds, find value bets, spot arbitrage opportunities, and track dropping odds across 34 sports.",
+  "long_description": "Connect Claude to the Odds-API.io platform for real-time sports betting data.\n\nFetch live and pre-match odds from 365+ bookmakers across football, basketball, tennis, baseball, ice hockey, and 29 more sports. Compare odds, find value bets backed by sharp bookmaker consensus, discover arbitrage opportunities, and track dropping odds to see where the smart money is moving.\n\nIncludes tools for events, odds, historical data, value bets, arbitrage detection, and dropping odds.\n\nRequires an API key from odds-api.io (free tier available).",
   "author": {
     "name": "Odds-API.io",
     "email": "hello@odds-api.io",
