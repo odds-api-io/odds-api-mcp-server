@@ -306,7 +306,7 @@ const tools: ToolDefinition[] = [
         eventId: { type: "string", description: "Event ID" },
         bookmakers: {
           type: "string",
-          description: "Comma-separated bookmaker names, max 30 (e.g., 'Bet365,Pinnacle,Unibet')",
+          description: "Comma-separated bookmaker names, max 30 (e.g., 'Bet365,SingBet,Unibet')",
         },
       },
       required: ["eventId", "bookmakers"],
