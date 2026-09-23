@@ -100,6 +100,7 @@ Then use `odds-api-mcp` as the command instead of `npx -y odds-api-mcp-server`.
 |------|-------------|
 | `get_sports` | List all available sports with slugs |
 | `get_leagues` | Get leagues for a sport (with optional `all` flag for inactive leagues) |
+| `get_markets` | List the exact market names a sport serves, with shape, period and prematch/live availability |
 
 ### Bookmakers
 
@@ -126,7 +127,7 @@ Then use `odds-api-mcp` as the command instead of `npx -y odds-api-mcp-server`.
 | `get_odds` | Get odds for an event from selected bookmakers |
 | `get_multi_odds` | Get odds for up to 10 events in one call |
 | `get_odds_movements` | Get historical line movements for a market |
-| `get_updated_odds` | Get recently changed odds (polling) |
+| `get_updated_odds` | Get recently changed odds (polling), for the markets you name |
 
 ### Historical
 

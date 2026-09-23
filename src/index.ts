@@ -144,6 +144,25 @@ const tools: ToolDefinition[] = [
   // ── Leagues ─────────────────────────────────────────────────────
 
   {
+    name: "get_markets",
+    description:
+      "List the exact market names served for a sport, with how to read each one (shape), the period it covers and whether it is available prematch and live. Use it before passing markets to other tools; names must match in full, e.g. 'ML' not 'Match Winner'.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        sport: {
+          type: "string",
+          description: "Sport slug (e.g., 'football', 'basketball', 'tennis')",
+        },
+      },
+      required: ["sport"],
+    },
+    async handler(args) {
+      const { sport } = args as { sport: string };
+      return jsonResponse(await apiRequest("/markets", { sport }));
+    },
+  },
+  {
     name: "get_leagues",
     description: "Get leagues for a sport. Returns league name, slug, and active event count.",
     inputSchema: {
@@ -377,13 +396,13 @@ const tools: ToolDefinition[] = [
   {
     name: "get_updated_odds",
     description:
-      "Get odds updated since a Unix timestamp for a bookmaker and sport. The timestamp must be at most 1 minute old. Useful for efficient polling.",
+      "Get odds updated since a Unix timestamp for a bookmaker and sport, limited to the markets you name. The timestamp must be at most 90 seconds old. Useful for efficient polling.",
     inputSchema: {
       type: "object",
       properties: {
         since: {
           type: "number",
-          description: "Unix timestamp (must be within the last 60 seconds)",
+          description: "Unix timestamp in seconds, at most 90 seconds old",
         },
         bookmaker: {
           type: "string",
@@ -393,17 +412,23 @@ const tools: ToolDefinition[] = [
           type: "string",
           description: "Sport slug (e.g., 'football')",
         },
+        markets: {
+          type: "string",
+          description:
+            "Comma-separated market names, max 20 (e.g., 'ML,Spread,Totals'). Required by the API. Use get_markets for the exact names a sport serves.",
+        },
       },
-      required: ["since", "bookmaker", "sport"],
+      required: ["since", "bookmaker", "sport", "markets"],
     },
     async handler(args) {
-      const { since, bookmaker, sport } = args as {
+      const { since, bookmaker, sport, markets } = args as {
         since: number;
         bookmaker: string;
         sport: string;
+        markets: string;
       };
       return jsonResponse(
-        await apiRequest("/odds/updated", { since, bookmaker, sport }),
+        await apiRequest("/odds/updated", { since, bookmaker, sport, markets }),
       );
     },
   },
@@ -693,7 +718,7 @@ const tools: ToolDefinition[] = [
 const toolMap = new Map(tools.map((tool) => [tool.name, tool]));
 
 const server = new Server(
-  { name: "odds-api-mcp", version: "1.5.3" },
+  { name: "odds-api-mcp", version: "1.6.0" },
   { capabilities: { tools: {}, resources: {} } },
 );
 
