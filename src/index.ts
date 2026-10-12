@@ -39,7 +39,7 @@ async function apiRequest(
   endpoint: string,
   params: Record<string, ParamValue> = {},
   method: "GET" | "PUT" | "POST" = "GET",
-  body?: unknown,
+  jsonBody?: unknown,
 ): Promise<unknown> {
   if (!API_KEY) {
     throw new Error("ODDS_API_KEY environment variable is not set");
@@ -56,9 +56,9 @@ async function apiRequest(
 
   const response = await fetch(
     url.toString(),
-    body === undefined
+    jsonBody === undefined
       ? { method }
-      : { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) },
+      : { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(jsonBody) },
   );
 
   if (!response.ok) {
