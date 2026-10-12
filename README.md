@@ -8,7 +8,7 @@ Full AI-tooling docs: [docs.odds-api.io/ai-vibe-coding](https://docs.odds-api.io
 
 ## Features
 
-- **22 API tools** covering the full Odds-API.io v3 surface: sports, events, odds, historical data, value bets, arbitrage, dropping odds, and more
+- **24 API tools** covering the full Odds-API.io v3 surface: sports, events, odds, historical data, bet settlement, value bets, arbitrage, dropping odds, and more
 - **Documentation resources** for AI context
 - **Real-time data** from 365+ bookmakers across 34 sports
 
@@ -139,6 +139,8 @@ Then use `odds-api-mcp` as the command instead of `npx -y odds-api-mcp-server`.
 
 | Tool | Description |
 |------|-------------|
+| `get_settlements` | Status, final score and `final` flag for up to 50 events |
+| `grade_bets` | Settle up to 50 bets as won, lost, void, half won or half lost |
 | `get_value_bets` | Get positive EV opportunities for a bookmaker |
 | `get_arbitrage_bets` | Get arbitrage opportunities with optimal stakes |
 | `get_dropping_odds` | Track sharp bookmaker line movements by sport, league, market, and time window |

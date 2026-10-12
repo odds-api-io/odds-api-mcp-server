@@ -66,6 +66,8 @@ describe("Tool Registry", () => {
     "get_dropping_odds",
     "get_historical_events",
     "get_historical_odds",
+    "get_settlements",
+    "grade_bets",
     "get_value_bets",
     "get_arbitrage_bets",
     "get_participants",
@@ -73,8 +75,8 @@ describe("Tool Registry", () => {
     "get_documentation",
   ];
 
-  it("has all 22 tools registered", () => {
-    expect(tools).toHaveLength(22);
+  it("has all 24 tools registered", () => {
+    expect(tools).toHaveLength(24);
   });
 
   it("has no duplicate tool names", () => {
@@ -138,6 +140,8 @@ describe("Tool Schemas - Required Parameters", () => {
     ["get_dropping_odds", []],
     ["get_historical_events", ["sport", "league", "from", "to"]],
     ["get_historical_odds", ["eventId", "bookmakers"]],
+    ["get_settlements", ["eventIds"]],
+    ["grade_bets", ["selections"]],
     ["get_value_bets", ["bookmaker"]],
     ["get_arbitrage_bets", ["bookmakers"]],
     ["get_participants", ["sport"]],
@@ -373,6 +377,20 @@ describe("Tool Handlers", () => {
 
     const calledUrl = new URL(fetchMock.mock.calls[0][0]);
     expect(calledUrl.searchParams.has("all")).toBe(false);
+  });
+
+  it("grade_bets posts the selections as a JSON body", async () => {
+    const fetchMock = mockFetchJson({ grades: [] });
+    globalThis.fetch = fetchMock;
+
+    const selections = [{ ref: "bet-1", eventId: 123, market: "Spread", hdp: -0.75, side: "home" }];
+    await toolMap.get("grade_bets")!.handler({ selections });
+
+    const [calledUrl, init] = fetchMock.mock.calls[0];
+    expect(new URL(calledUrl).pathname.endsWith("/settlements/grade")).toBe(true);
+    expect(init.method).toBe("POST");
+    expect(init.headers["Content-Type"]).toBe("application/json");
+    expect(JSON.parse(init.body)).toEqual({ selections });
   });
 
   it("get_value_bets sends includeEventDetails only when true", async () => {

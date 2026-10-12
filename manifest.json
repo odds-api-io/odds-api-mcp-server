@@ -44,6 +44,8 @@
     { "name": "get_dropping_odds", "description": "Find odds that have dropped significantly from sharp bookmakers" },
     { "name": "get_historical_events", "description": "Get past events for a sport and league" },
     { "name": "get_historical_odds", "description": "Get closing odds for a finished event" },
+    { "name": "get_settlements", "description": "Get status, final score and final flag for up to 50 events" },
+    { "name": "grade_bets", "description": "Settle bets as won, lost, void, half won or half lost" },
     { "name": "get_value_bets", "description": "Find value bets based on sharp bookmaker consensus" },
     { "name": "get_arbitrage_bets", "description": "Find arbitrage opportunities across bookmakers" },
     { "name": "get_selected_bookmakers", "description": "View your currently selected bookmakers" },
