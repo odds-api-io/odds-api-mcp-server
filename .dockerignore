@@ -1,0 +1,15 @@
+node_modules
+dist
+.git
+.github
+*.mcpb
+*.log
+.env
+.npmrc
+src/**/*.test.ts
+docker
+manifest.json
+server.json
+smithery.yaml
+.mcpbignore
+RELEASE.md
