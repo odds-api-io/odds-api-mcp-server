@@ -38,7 +38,8 @@ interface ToolDefinition {
 async function apiRequest(
   endpoint: string,
   params: Record<string, ParamValue> = {},
-  method: "GET" | "PUT" = "GET",
+  method: "GET" | "PUT" | "POST" = "GET",
+  jsonBody?: unknown,
 ): Promise<unknown> {
   if (!API_KEY) {
     throw new Error("ODDS_API_KEY environment variable is not set");
@@ -53,7 +54,12 @@ async function apiRequest(
     }
   }
 
-  const response = await fetch(url.toString(), { method });
+  const response = await fetch(
+    url.toString(),
+    jsonBody === undefined
+      ? { method }
+      : { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(jsonBody) },
+  );
 
   if (!response.ok) {
     const body = await response.text();
@@ -580,6 +586,78 @@ const tools: ToolDefinition[] = [
       return jsonResponse(
         await apiRequest("/historical/odds", { eventId, bookmakers }),
       );
+    },
+  },
+
+  // ── Settlement ──────────────────────────────────────────────────
+
+  {
+    name: "get_settlements",
+    description:
+      "Get what happened in up to 50 events: status (pending, live, awaiting_result, settled, cancelled), final score by period and a `final` flag that says the result is confirmed. Unknown ids are listed in notFound. Paid plans.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        eventIds: {
+          type: "string",
+          description: "Comma-separated event IDs (max 50)",
+        },
+      },
+      required: ["eventIds"],
+    },
+    async handler(args) {
+      const { eventIds } = args as { eventIds: string };
+      return jsonResponse(await apiRequest("/settlements", { eventIds }));
+    },
+  },
+
+  {
+    name: "grade_bets",
+    description:
+      "Settle up to 50 bets. Each selection is graded as won, lost, void, half_won, half_lost, pending or ungradeable, with a reason, a `final` flag and the score it was based on. Covers 64 markets in 20 sports, including Asian handicap quarter lines, totals, corners, bookings and player props. Football settles on 90 minutes. Paid plans.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        selections: {
+          type: "array",
+          maxItems: 50,
+          description: "Bets to grade, described with the fields of an odds row from get_odds",
+          items: {
+            type: "object",
+            properties: {
+              eventId: { type: "number", description: "Event ID" },
+              market: {
+                type: "string",
+                description: "Market name as served (e.g., 'ML', 'Spread', 'Totals', 'Corners Totals', 'Player Props')",
+              },
+              side: {
+                type: "string",
+                description: "home, away, draw, over, under, yes, no, odd, even, 1x, 12, x2 or none",
+              },
+              hdp: {
+                type: "number",
+                description: "The line as served. Handicaps are stated for the home side even when the bet is on away",
+              },
+              label: {
+                type: "string",
+                description: "Row label as served, required for player props (e.g., 'LeBron James (Points)')",
+              },
+              tieRule: {
+                type: "string",
+                enum: ["lose", "void"],
+                description: "How a level score settles a moneyline in sports where bookmakers differ",
+              },
+              ref: { type: "string", description: "Your own id for the bet, echoed in the answer" },
+            },
+            required: ["eventId", "market", "side"],
+          },
+        },
+      },
+      required: ["selections"],
+    },
+    async handler(args) {
+      const { selections } = args as { selections: unknown[] };
+      return jsonResponse(await apiRequest("/settlements/grade", {}, "POST", { selections }));
     },
   },
 
