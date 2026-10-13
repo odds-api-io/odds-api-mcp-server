@@ -54,6 +54,7 @@ describe("Tool Registry", () => {
     "get_selected_bookmakers",
     "select_bookmakers",
     "clear_selected_bookmakers",
+    "get_markets",
     "get_leagues",
     "get_events",
     "get_event",
@@ -75,8 +76,8 @@ describe("Tool Registry", () => {
     "get_documentation",
   ];
 
-  it("has all 24 tools registered", () => {
-    expect(tools).toHaveLength(24);
+  it("has all 25 tools registered", () => {
+    expect(tools).toHaveLength(25);
   });
 
   it("has no duplicate tool names", () => {
@@ -128,6 +129,7 @@ describe("Tool Schemas - Required Parameters", () => {
     ["get_selected_bookmakers", []],
     ["select_bookmakers", ["bookmakers"]],
     ["clear_selected_bookmakers", []],
+    ["get_markets", ["sport"]],
     ["get_leagues", ["sport"]],
     ["get_events", ["sport"]],
     ["get_event", ["id"]],
@@ -136,7 +138,7 @@ describe("Tool Schemas - Required Parameters", () => {
     ["get_odds", ["eventId", "bookmakers"]],
     ["get_multi_odds", ["eventIds", "bookmakers"]],
     ["get_odds_movements", ["eventId", "bookmaker", "market"]],
-    ["get_updated_odds", ["since", "bookmaker", "sport"]],
+    ["get_updated_odds", ["since", "bookmaker", "sport", "markets"]],
     ["get_dropping_odds", []],
     ["get_historical_events", ["sport", "league", "from", "to"]],
     ["get_historical_odds", ["eventId", "bookmakers"]],
@@ -463,7 +465,7 @@ describe("Tool Handlers", () => {
     expect(calledUrl.searchParams.get("marketLine")).toBe("0.5");
   });
 
-  it("get_updated_odds passes since as number", async () => {
+  it("get_updated_odds passes since as number and markets", async () => {
     const fetchMock = mockFetchJson([]);
     globalThis.fetch = fetchMock;
 
@@ -472,11 +474,24 @@ describe("Tool Handlers", () => {
       since,
       bookmaker: "Bet365",
       sport: "football",
+      markets: "ML,Totals",
     });
 
     const calledUrl = new URL(fetchMock.mock.calls[0][0]);
     expect(calledUrl.pathname).toBe("/v3/odds/updated");
     expect(calledUrl.searchParams.get("since")).toBe(String(since));
+    expect(calledUrl.searchParams.get("markets")).toBe("ML,Totals");
+  });
+
+  it("get_markets passes sport", async () => {
+    const fetchMock = mockFetchJson([]);
+    globalThis.fetch = fetchMock;
+
+    await toolMap.get("get_markets")!.handler({ sport: "football" });
+
+    const calledUrl = new URL(fetchMock.mock.calls[0][0]);
+    expect(calledUrl.pathname).toBe("/v3/markets");
+    expect(calledUrl.searchParams.get("sport")).toBe("football");
   });
 
   it("get_dropping_odds passes all optional params", async () => {
@@ -486,7 +501,7 @@ describe("Tool Handlers", () => {
     await toolMap.get("get_dropping_odds")!.handler({
       sport: "football",
       league: "england-premier-league",
-      market: "ML",
+      markets: "ML",
       timeWindow: "12h",
       minDrop: 5,
       limit: 100,
@@ -498,7 +513,7 @@ describe("Tool Handlers", () => {
     expect(calledUrl.pathname).toBe("/v3/dropping-odds");
     expect(calledUrl.searchParams.get("sport")).toBe("football");
     expect(calledUrl.searchParams.get("league")).toBe("england-premier-league");
-    expect(calledUrl.searchParams.get("market")).toBe("ML");
+    expect(calledUrl.searchParams.get("markets")).toBe("ML");
     expect(calledUrl.searchParams.get("timeWindow")).toBe("12h");
     expect(calledUrl.searchParams.get("minDrop")).toBe("5");
     expect(calledUrl.searchParams.get("limit")).toBe("100");
