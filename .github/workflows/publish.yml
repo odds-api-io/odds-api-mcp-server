@@ -44,6 +44,14 @@ jobs:
       - name: Install mcp-publisher
         run: |
           curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+      - name: Wait until npm serves this version
+        run: |
+          V="${GITHUB_REF_NAME#v}"
+          for i in $(seq 1 40); do
+            [ "$(npm view odds-api-mcp-server@"$V" version 2>/dev/null)" = "$V" ] && exit 0
+            sleep 15
+          done
+          echo "odds-api-mcp-server@$V not visible on npm after 10 minutes"; exit 1
       - run: ./mcp-publisher login github-oidc
       - run: ./mcp-publisher publish
 
