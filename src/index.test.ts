@@ -6,12 +6,12 @@ vi.hoisted(() => {
 });
 
 // Mock the MCP SDK so module-level server setup doesn't fail
-vi.mock("@modelcontextprotocol/sdk/server/index.js", () => {
-  class MockServer {
-    setRequestHandler = vi.fn();
+vi.mock("@modelcontextprotocol/sdk/server/mcp.js", () => {
+  class MockMcpServer {
+    server = { setRequestHandler: vi.fn() };
     connect = vi.fn();
   }
-  return { Server: MockServer };
+  return { McpServer: MockMcpServer };
 });
 vi.mock("@modelcontextprotocol/sdk/server/stdio.js", () => {
   class MockTransport {}

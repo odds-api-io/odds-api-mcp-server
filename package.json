@@ -1,7 +1,7 @@
 {
   "name": "odds-api-mcp-server",
-  "version": "1.6.1",
-  "description": "MCP server for Odds-API.io - Access sports betting odds data from AI tools like Claude, Cursor, and VS Code",
+  "version": "1.7.0",
+  "description": "MCP server for the Odds-API.io sports betting odds API: live and pre-match odds API for 450+ bookmakers in Claude, Cursor and other AI agents",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -12,33 +12,55 @@
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
-    "mcp",
-    "model-context-protocol",
-    "odds-api",
-    "sports-betting",
+    "odds api",
+    "sports odds api",
+    "betting odds api",
     "odds",
-    "ai",
+    "sports betting",
+    "betting odds",
+    "sportsbook",
+    "player props",
+    "live odds",
+    "odds feed",
+    "arbitrage",
+    "value bets",
+    "websocket",
+    "typescript",
+    "nfl",
+    "nba",
+    "mlb",
+    "nhl",
+    "soccer",
+    "football",
+    "tennis",
+    "esports",
+    "bet365",
+    "draftkings",
+    "fanduel",
+    "betfair",
+    "mcp",
+    "mcp-server",
+    "model context protocol",
     "claude",
     "cursor",
-    "betting-odds",
-    "sports-data",
-    "arbitrage"
+    "ai agent"
   ],
   "author": "Odds-API.io",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/odds-api-io/odds-api-mcp-server"
+    "url": "git+https://github.com/odds-api-io/odds-api-mcp-server.git"
   },
-  "homepage": "https://odds-api.io",
+  "homepage": "https://github.com/odds-api-io/odds-api-mcp-server#readme",
   "bugs": {
     "url": "https://github.com/odds-api-io/odds-api-mcp-server/issues"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.5.0"
+    "@modelcontextprotocol/sdk": "^1.32.2"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
@@ -49,5 +71,13 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "mcpName": "io.github.odds-api-io/odds-api-mcp-server"
+  "mcpName": "io.github.odds-api-io/odds-api-mcp-server",
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts",
+    "README.md",
+    "LICENSE",
+    "server.json",
+    "manifest.json"
+  ]
 }
