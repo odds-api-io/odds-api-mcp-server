@@ -151,8 +151,8 @@ Requests go to `https://api.odds-api.io/v3`. Each tool call is one API request a
 
 | Tool | Description |
 |------|-------------|
-| `get_value_bets` | Prices above a fair-odds estimate for a bookmaker, by sport and league |
-| `get_arbitrage_bets` | Arbitrage across your bookmakers with `sport`, `league`, `markets`, `minProfit`, `allCombinations` |
+| `get_value_bets` | Prices above a fair-odds estimate for a bookmaker, by sport and league. `expectedValue` is bookmaker/fair x 100, so edge % = `expectedValue - 100` |
+| `get_arbitrage_bets` | Arbitrage across your bookmakers with `sport`, `league`, `markets`, `minProfit`, `allCombinations`. `profitMargin` is already a percentage |
 | `get_dropping_odds` | Biggest drops at sharp bookmakers by sport, league, market and time window |
 
 ### Historical and closing lines

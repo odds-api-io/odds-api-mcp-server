@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.8.2 (2026-11-06)
+
+### Fixed
+- `get_value_bets` described `expectedValue` as `(probability x odds) - 1`. It is bookmaker/fair x 100; edge % = `expectedValue - 100` (103.42 is a 3.42% edge). The tool description, the odds-api skill and the README now say so.
+- `get_arbitrage_bets` now states that `profitMargin` is already a percentage (2.48 means 2.48%).
+
 ## 1.8.1
 
 Republish of 1.8.0 (same code). 1.8.0 was staged on npm and not published.

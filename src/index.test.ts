@@ -146,7 +146,7 @@ describe("Tool Registry", () => {
 
   it("uses the canonical base URL and version", () => {
     expect(API_BASE_URL).toBe("https://api.odds-api.io/v3");
-    expect(SERVER_VERSION).toBe("1.8.1");
+    expect(SERVER_VERSION).toBe("1.8.2");
   });
 
   it("has no duplicate tool names", () => {
@@ -476,6 +476,11 @@ describe("Tool Handlers", () => {
     expect(init.method).toBe("POST");
     expect(init.headers["Content-Type"]).toBe("application/json");
     expect(JSON.parse(init.body)).toEqual({ selections });
+  });
+
+  it("value-bet and arbitrage descriptions state the units", () => {
+    expect(toolMap.get("get_value_bets")!.description).toContain("expectedValue is bookmaker/fair x 100; edge % = expectedValue - 100");
+    expect(toolMap.get("get_arbitrage_bets")!.description).toContain("profitMargin (already a percentage");
   });
 
   it("get_value_bets sends includeEventDetails only when true", async () => {
