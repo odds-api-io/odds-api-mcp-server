@@ -62,3 +62,8 @@ node_modules/detect-libc/
 package-lock.json
 node_modules/.package-lock.json
 *.mcpb
+
+# Build caches and type-only packages
+node_modules/.vite/
+node_modules/@types/node/
+node_modules/undici-types/

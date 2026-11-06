@@ -48,7 +48,7 @@ Add the same block to `.cursor/mcp.json` in your project or your global Cursor M
 
 ## Tools
 
-22 tools covering the full Odds-API.io v3 surface: sports, leagues, bookmakers, events, live events, search, per-event odds, multi-event odds, odds movements, updated odds, historical events and odds, value bets, arbitrage bets, dropping odds and participants.
+33 tools covering every public Odds-API.io v3 REST endpoint: sports, markets, leagues, bookmakers, events, live events, search, odds with a market filter, multi-event odds, odds summaries (best, average and fair prices), odds movements, updated odds, value bets, arbitrage, dropping odds, historical events, search and odds, closing lines, settlement and bet grading, golf outrights (odds and results), participants, bookmaker id mappings and request quota. The participant logo (an image) and the WebSocket stream are not exposed as tools.
 
 ## Links
 

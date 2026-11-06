@@ -12,7 +12,8 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 COPY --from=build /app/dist ./dist
-COPY LICENSE README.md ./
+COPY LICENSE README.md CHANGELOG.md ./
+COPY skills ./skills
 USER node
 # Set ODDS_API_KEY at run time: docker run -i -e ODDS_API_KEY=... odds-api-mcp-server
 ENTRYPOINT ["node", "dist/index.js"]
