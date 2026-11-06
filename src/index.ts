@@ -796,7 +796,7 @@ const tools: ToolDefinition[] = [
 const toolMap = new Map(tools.map((tool) => [tool.name, tool]));
 
 const server = new Server(
-  { name: "odds-api-mcp", version: "1.6.0" },
+  { name: "odds-api-mcp", version: "1.6.1" },
   { capabilities: { tools: {}, resources: {} } },
 );
 
