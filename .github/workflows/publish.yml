@@ -1,0 +1,66 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - run: npm install -g npm@latest
+      - name: Check release tag matches versions
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          for v in "$(node -p "require('./package.json').version")" \
+                   "$(node -p "require('./server.json').version")" \
+                   "$(node -p "require('./server.json').packages[0].version")" \
+                   "$(node -p "require('./manifest.json').version")"; do
+            if [ "$v" != "$TAG" ]; then
+              echo "Version $v does not match release tag $TAG"; exit 1
+            fi
+          done
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - run: npm publish --provenance --access public
+
+  mcp-registry:
+    needs: npm
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install mcp-publisher
+        run: |
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+      - run: ./mcp-publisher login github-oidc
+      - run: ./mcp-publisher publish
+
+  mcpb:
+    needs: npm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run build
+      - run: npm prune --omit=dev
+      - run: npx -y @anthropic-ai/mcpb pack . odds-api-mcp-server.mcpb
+      - run: gh release upload "$GITHUB_REF_NAME" odds-api-mcp-server.mcpb --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
