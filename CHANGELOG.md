@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.1
+
+Republish of 1.8.0 (same code). 1.8.0 was staged on npm and not published.
+
 ## 1.8.0 (2026-11-06)
 
 Covers every public Odds-API.io v3 REST endpoint (33 tools, up from 25).

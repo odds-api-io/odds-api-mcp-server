@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "odds-api",
   "display_name": "Odds-API.io",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Sports betting odds from 450+ bookmakers across 34 sports. Odds, odds summaries, closing lines, bet settlement, golf outrights, value bets, arbitrage and dropping odds.",
   "long_description": "Connect Claude to Odds-API.io for sports betting data.\n\nFetch live and pre-match odds from 450+ bookmakers across football, basketball, tennis, baseball, ice hockey and 29 more sports. Compare prices with best, average and fair odds per line, track line movements and dropping odds, find value bets and arbitrage, pull closing lines for whole seasons, settle bets from final results, and get golf outright odds and results (Outrights add-on).\n\nRequires an API key from a paid plan at odds-api.io/pricing.",
   "author": {
