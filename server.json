@@ -19,7 +19,7 @@
       "environmentVariables": [
         {
           "name": "ODDS_API_KEY",
-          "description": "Odds-API.io API key (free tier available, no credit card)",
+          "description": "Odds-API.io API key (paid plans at odds-api.io/pricing)",
           "isRequired": true,
           "isSecret": true
         }

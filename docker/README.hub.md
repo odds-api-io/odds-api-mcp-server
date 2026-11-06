@@ -57,4 +57,4 @@ Add the same block to `.cursor/mcp.json` in your project or your global Cursor M
 - Source and issues: https://github.com/odds-api-io/odds-api-mcp-server
 - npm: https://www.npmjs.com/package/odds-api-mcp-server
 
-Free tier: 100 requests/hour, no credit card required.
+An API key from a paid plan is required: https://odds-api.io/pricing
