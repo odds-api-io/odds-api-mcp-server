@@ -7,7 +7,7 @@ startCommand:
     properties:
       apiKey:
         type: string
-        description: Odds-API.io API key (free tier available at odds-api.io, no credit card)
+        description: Odds-API.io API key (paid plans at odds-api.io/pricing)
   commandFunction: |-
     (config) => ({
       command: "npx",

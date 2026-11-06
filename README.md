@@ -90,7 +90,7 @@ Then use `odds-api-mcp` as the command instead of `npx -y odds-api-mcp-server`.
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `ODDS_API_KEY` | Yes | Your API key from [odds-api.io](https://odds-api.io) |
+| `ODDS_API_KEY` | Yes | Your API key from a paid plan at [odds-api.io/pricing](https://odds-api.io/pricing) |
 
 ## Available Tools
 
