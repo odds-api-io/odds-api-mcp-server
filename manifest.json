@@ -2,9 +2,9 @@
   "manifest_version": "0.3",
   "name": "odds-api",
   "display_name": "Odds-API.io",
-  "version": "1.7.0",
-  "description": "Real-time sports betting odds from 450+ bookmakers. Fetch odds, find value bets, spot arbitrage opportunities, and track dropping odds across 34 sports.",
-  "long_description": "Connect Claude to the Odds-API.io platform for real-time sports betting data.\n\nFetch live and pre-match odds from 450+ bookmakers across football, basketball, tennis, baseball, ice hockey, and 29 more sports. Compare odds, find value bets backed by sharp bookmaker consensus, discover arbitrage opportunities, and track dropping odds to see where the smart money is moving.\n\nIncludes tools for events, odds, historical data, value bets, arbitrage detection, and dropping odds.\n\nRequires an API key from a paid plan at odds-api.io/pricing.",
+  "version": "1.8.0",
+  "description": "Sports betting odds from 450+ bookmakers across 34 sports. Odds, odds summaries, closing lines, bet settlement, golf outrights, value bets, arbitrage and dropping odds.",
+  "long_description": "Connect Claude to Odds-API.io for sports betting data.\n\nFetch live and pre-match odds from 450+ bookmakers across football, basketball, tennis, baseball, ice hockey and 29 more sports. Compare prices with best, average and fair odds per line, track line movements and dropping odds, find value bets and arbitrage, pull closing lines for whole seasons, settle bets from final results, and get golf outright odds and results (Outrights add-on).\n\nRequires an API key from a paid plan at odds-api.io/pricing.",
   "author": {
     "name": "Odds-API.io",
     "email": "hello@odds-api.io",
@@ -18,40 +18,162 @@
   "documentation": "https://docs.odds-api.io",
   "support": "https://github.com/odds-api-io/odds-api-mcp-server/issues",
   "license": "MIT",
-  "keywords": ["sports", "betting", "odds", "football", "basketball", "arbitrage", "value-bets", "bookmakers"],
+  "keywords": [
+    "sports",
+    "betting",
+    "odds",
+    "football",
+    "basketball",
+    "arbitrage",
+    "value-bets",
+    "bookmakers"
+  ],
   "server": {
     "type": "node",
     "entry_point": "dist/index.js",
     "mcp_config": {
       "command": "node",
-      "args": ["${__dirname}/dist/index.js"],
+      "args": [
+        "${__dirname}/dist/index.js"
+      ],
       "env": {
         "ODDS_API_KEY": "${user_config.api_key}"
       }
     }
   },
   "tools": [
-    { "name": "get_sports", "description": "List all available sports" },
-    { "name": "get_bookmakers", "description": "List all active bookmakers" },
-    { "name": "get_markets", "description": "List the exact market names a sport serves" },
-    { "name": "get_leagues", "description": "Get leagues for a sport" },
-    { "name": "get_events", "description": "Get upcoming events with filters" },
-    { "name": "get_live_events", "description": "Get currently live events with scores" },
-    { "name": "search_events", "description": "Search events by team name" },
-    { "name": "get_odds", "description": "Get odds for an event from selected bookmakers" },
-    { "name": "get_multi_odds", "description": "Get odds for multiple events in one call" },
-    { "name": "get_odds_movements", "description": "Get historical odds movements for an event" },
-    { "name": "get_updated_odds", "description": "Get recently updated odds for the markets you name" },
-    { "name": "get_dropping_odds", "description": "Find odds that have dropped significantly from sharp bookmakers" },
-    { "name": "get_historical_events", "description": "Get past events for a sport and league" },
-    { "name": "get_historical_odds", "description": "Get closing odds for a finished event" },
-    { "name": "get_settlements", "description": "Get status, final score and final flag for up to 50 events" },
-    { "name": "grade_bets", "description": "Settle bets as won, lost, void, half won or half lost" },
-    { "name": "get_value_bets", "description": "Find value bets based on sharp bookmaker consensus" },
-    { "name": "get_arbitrage_bets", "description": "Find arbitrage opportunities across bookmakers" },
-    { "name": "get_selected_bookmakers", "description": "View your currently selected bookmakers" },
-    { "name": "select_bookmakers", "description": "Set your active bookmaker selection" },
-    { "name": "clear_selected_bookmakers", "description": "Reset bookmaker selection to default" }
+    {
+      "name": "get_sports",
+      "description": "List sports and their slugs (call first)"
+    },
+    {
+      "name": "get_markets",
+      "description": "List the exact market names a sport serves"
+    },
+    {
+      "name": "get_bookmakers",
+      "description": "List bookmakers with status and reason"
+    },
+    {
+      "name": "get_selected_bookmakers",
+      "description": "View your currently selected bookmakers"
+    },
+    {
+      "name": "select_bookmakers",
+      "description": "Add bookmakers to your selection"
+    },
+    {
+      "name": "clear_selected_bookmakers",
+      "description": "Clear your bookmaker selection (once per 12h)"
+    },
+    {
+      "name": "get_leagues",
+      "description": "List leagues for a sport"
+    },
+    {
+      "name": "get_events",
+      "description": "List events with filters and pagination"
+    },
+    {
+      "name": "get_event",
+      "description": "Get one event with scores and clock"
+    },
+    {
+      "name": "get_live_events",
+      "description": "List live events with scores"
+    },
+    {
+      "name": "search_events",
+      "description": "Search upcoming or live events by name"
+    },
+    {
+      "name": "get_odds",
+      "description": "Get odds for an event, filtered by market"
+    },
+    {
+      "name": "get_multi_odds",
+      "description": "Get odds for up to 10 events in one call"
+    },
+    {
+      "name": "get_odds_summary",
+      "description": "Best, average and fair price per line across bookmakers"
+    },
+    {
+      "name": "get_odds_movements",
+      "description": "Opening, latest and every price change for a market"
+    },
+    {
+      "name": "get_updated_odds",
+      "description": "Odds changed since a timestamp, for the markets you name"
+    },
+    {
+      "name": "get_value_bets",
+      "description": "Find prices above a fair-odds estimate"
+    },
+    {
+      "name": "get_arbitrage_bets",
+      "description": "Find arbitrage opportunities across bookmakers"
+    },
+    {
+      "name": "get_dropping_odds",
+      "description": "Odds that dropped the most at sharp bookmakers"
+    },
+    {
+      "name": "get_historical_events",
+      "description": "Finished events for a league and date range"
+    },
+    {
+      "name": "search_historical_events",
+      "description": "Search finished events by team name"
+    },
+    {
+      "name": "get_historical_odds",
+      "description": "Closing odds and final score for a finished event"
+    },
+    {
+      "name": "get_closing_lines",
+      "description": "Closing odds for every event across up to 10 leagues"
+    },
+    {
+      "name": "get_settlements",
+      "description": "Status, final score and final flag for up to 50 events"
+    },
+    {
+      "name": "grade_bets",
+      "description": "Settle bets as won, lost, void, half won or half lost"
+    },
+    {
+      "name": "list_outrights",
+      "description": "List golf outright tournaments (Outrights add-on)"
+    },
+    {
+      "name": "get_outright_odds",
+      "description": "Golf Winner, Top 5/10/20 and Make Cut odds (Outrights add-on)"
+    },
+    {
+      "name": "get_outright_results",
+      "description": "Golf tournament results and winners per market (Outrights add-on)"
+    },
+    {
+      "name": "get_participants",
+      "description": "List teams or players for a sport"
+    },
+    {
+      "name": "get_participant",
+      "description": "Get one team or player by ID"
+    },
+    {
+      "name": "get_mappings",
+      "description": "Map events to bookmaker ids such as Polymarket and Kalshi"
+    },
+    {
+      "name": "get_usage",
+      "description": "Hourly request limit, remaining requests and reset time"
+    },
+    {
+      "name": "get_documentation",
+      "description": "Fetch the full API documentation"
+    }
   ],
   "user_config": {
     "api_key": {
@@ -63,7 +185,11 @@
     }
   },
   "compatibility": {
-    "platforms": ["darwin", "win32", "linux"],
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
     "runtimes": {
       "node": ">=18.0.0"
     }
