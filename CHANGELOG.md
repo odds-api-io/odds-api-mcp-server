@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.3
+
+First release published from GitHub Actions with npm/PyPI trusted publishing and provenance. No code changes.
+
 ## 1.8.2 (2026-11-06)
 
 ### Fixed

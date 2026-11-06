@@ -15,7 +15,7 @@ import {
 // ── Constants ────────────────────────────────────────────────────────────────
 
 const SERVER_NAME = "odds-api-mcp";
-const SERVER_VERSION = "1.8.2";
+const SERVER_VERSION = "1.8.3";
 const API_BASE_URL = "https://api.odds-api.io/v3";
 const DOCS_BASE_URL = "https://docs.odds-api.io";
 const PRICING_URL = "https://odds-api.io/pricing?ref=mcp";
