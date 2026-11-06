@@ -15,7 +15,7 @@ import {
 // ── Constants ────────────────────────────────────────────────────────────────
 
 const SERVER_NAME = "odds-api-mcp";
-const SERVER_VERSION = "1.8.1";
+const SERVER_VERSION = "1.8.2";
 const API_BASE_URL = "https://api.odds-api.io/v3";
 const DOCS_BASE_URL = "https://docs.odds-api.io";
 const PRICING_URL = "https://odds-api.io/pricing?ref=mcp";
@@ -755,7 +755,7 @@ const tools: ToolDefinition[] = [
     name: "get_value_bets",
     title: "Value bets",
     description:
-      "Prices at one bookmaker that sit above a fair-odds estimate from market consensus, with expectedValue ((probability x odds) - 1), betSide, the bookmaker's odds and bet link. Prematch, refreshed every few seconds. Filter by sport and league and use maxResults to keep the list short. Expected value is an estimate, not a guaranteed outcome.",
+      "Prices at one bookmaker that sit above a fair-odds estimate from market consensus, with expectedValue, betSide, the bookmaker's odds and bet link. Prematch, refreshed every few seconds. Filter by sport and league and use maxResults to keep the list short. expectedValue is bookmaker/fair x 100; edge % = expectedValue - 100 (103.42 is a 3.42% edge, below 100 is a negative edge). Never multiply it by 100. Expected value is an estimate, not a guaranteed outcome.",
     annotations: READ_ONLY,
     inputSchema: {
       type: "object",
@@ -800,7 +800,7 @@ const tools: ToolDefinition[] = [
     name: "get_arbitrage_bets",
     title: "Arbitrage opportunities",
     description:
-      "Price gaps across the named bookmakers where the best price for every outcome implies a total probability under 100%. Prematch only, sorted by profitMargin (percent, after exchange fees), with stake split (optimalStakes), stake limits (maxStake) and bet links. Prices move fast and bookmakers can void or limit bets, so present results as calculated margins at the quoted prices, never as guaranteed.",
+      "Price gaps across the named bookmakers where the best price for every outcome implies a total probability under 100%. Prematch only, sorted by profitMargin (already a percentage after exchange fees: 2.48 means 2.48%, do not multiply by 100), with stake split (optimalStakes), stake limits (maxStake) and bet links. Prices move fast and bookmakers can void or limit bets, so present results as calculated margins at the quoted prices, never as guaranteed.",
     annotations: READ_ONLY,
     inputSchema: {
       type: "object",

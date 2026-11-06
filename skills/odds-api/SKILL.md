@@ -50,4 +50,5 @@ Prematch odds change every few seconds to minutes; catalogue data (sports, leagu
 
 - Name the bookmaker and when the price was updated (`updatedAt`).
 - Odds are decimal strings. Score periods use `p1..pN`, `ft`, `ot`, `ap` (older keys `period1`, `overtime`, `penalties`, `fulltime` stop on 12 November 2026).
+- Value bets: `expectedValue` is bookmaker/fair x 100; edge % = `expectedValue - 100` (103.42 is a 3.42% edge, below 100 is a negative edge). Arbitrage: `profitMargin` is already a percentage (2.48 means 2.48%).
 - Prices and expected value are market data, not predictions. Present arbitrage as a calculated margin at the quoted prices: prices move and bookmakers can limit or void bets.
