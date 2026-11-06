@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
   CallToolRequestSchema,
@@ -795,10 +795,11 @@ const tools: ToolDefinition[] = [
 
 const toolMap = new Map(tools.map((tool) => [tool.name, tool]));
 
-const server = new Server(
-  { name: "odds-api-mcp", version: "1.6.1" },
+const mcpServer = new McpServer(
+  { name: "odds-api-mcp", version: "1.7.0" },
   { capabilities: { tools: {}, resources: {} } },
 );
+const server = mcpServer.server;
 
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: tools.map(({ name, description, inputSchema }) => ({
@@ -881,7 +882,7 @@ async function main() {
   }
 
   const transport = new StdioServerTransport();
-  await server.connect(transport);
+  await mcpServer.connect(transport);
   console.error("Odds-API.io MCP Server running on stdio");
 }
 

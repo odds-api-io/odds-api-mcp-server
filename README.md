@@ -2,7 +2,24 @@
 
 [![npm version](https://img.shields.io/npm/v/odds-api-mcp-server)](https://www.npmjs.com/package/odds-api-mcp-server) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Model Context Protocol (MCP) server for [Odds-API.io](https://odds-api.io) - providing AI tools like Claude, Cursor, and VS Code with direct access to sports betting odds data.
+MCP server for the [Odds-API.io](https://odds-api.io) sports betting odds API. It gives Claude, Cursor, VS Code and other AI agents live and pre-match odds from 450+ bookmakers across 34 sports, plus value bets, arbitrage and dropping odds.
+
+## Quickstart
+
+1. Get an API key at [odds-api.io/pricing](https://odds-api.io/pricing?ref=npm).
+2. Add the server to Claude Code:
+
+   ```bash
+   claude mcp add odds-api --env ODDS_API_KEY="your-api-key" -- npx -y odds-api-mcp-server
+   ```
+
+3. Ask: "Show me upcoming Premier League matches with Bet365 odds."
+
+Setup for Claude Desktop, Cursor and VS Code is below.
+
+## Get an API key
+
+The server needs an Odds-API.io API key from a paid plan. Pick a plan at [odds-api.io/pricing](https://odds-api.io/pricing?ref=npm), then pass the key as the `ODDS_API_KEY` environment variable.
 
 Full AI-tooling docs: [docs.odds-api.io/ai-vibe-coding](https://docs.odds-api.io/ai-vibe-coding)
 
@@ -10,9 +27,9 @@ Full AI-tooling docs: [docs.odds-api.io/ai-vibe-coding](https://docs.odds-api.io
 
 - **25 API tools** covering the full Odds-API.io v3 surface: sports, events, odds, historical data, bet settlement, value bets, arbitrage, dropping odds, and more
 - **Documentation resources** for AI context
-- **Real-time data** from 450+ bookmakers across 34 sports
+- **Real-time odds** from 450+ bookmakers across 34 sports, including Bet365, DraftKings, FanDuel and Betfair
 
-## Quick Start
+## Install in your client
 
 ### One-Click Install (Claude Desktop)
 
@@ -84,13 +101,13 @@ Add to your VS Code settings (`.vscode/mcp.json`):
 npm install -g odds-api-mcp-server
 ```
 
-Then use `odds-api-mcp` as the command instead of `npx -y odds-api-mcp-server`.
+Then use `odds-api-mcp-server` as the command instead of `npx -y odds-api-mcp-server`.
 
 ## Configuration
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `ODDS_API_KEY` | Yes | Your API key from a paid plan at [odds-api.io/pricing](https://odds-api.io/pricing) |
+| `ODDS_API_KEY` | Yes | Your API key from a paid plan at [odds-api.io/pricing](https://odds-api.io/pricing?ref=npm) |
 
 ## Available Tools
 
