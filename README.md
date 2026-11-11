@@ -21,7 +21,13 @@ Setup for Claude Desktop, Cursor and VS Code is below.
 
 The server needs an Odds-API.io API key from a paid plan. Pick a plan at [odds-api.io/pricing](https://odds-api.io/pricing?ref=npm), then pass the key as the `ODDS_API_KEY` environment variable.
 
-Full AI-tooling docs: [docs.odds-api.io/ai-vibe-coding](https://docs.odds-api.io/ai-vibe-coding)
+## Documentation
+
+- [Build with AI: llms.txt, OpenAPI spec and setup for Claude, Cursor and Copilot](https://docs.odds-api.io/ai-vibe-coding)
+- [MCP server setup in the SDK guide](https://docs.odds-api.io/guides/sdks#mcp-server-ai-tools)
+- [Quickstart: make your first request](https://docs.odds-api.io/quickstart)
+- [Find value bets](https://docs.odds-api.io/guides/value-bets) and [arbitrage opportunities](https://docs.odds-api.io/guides/arbitrage-bets)
+- [Full API reference](https://docs.odds-api.io/api-reference/introduction)
 
 ## Features
 
@@ -252,6 +258,6 @@ MIT
 ## Links
 
 - [Odds-API.io](https://odds-api.io) - Main website
-- [Documentation](https://docs.odds-api.io) - API docs
+- [Documentation](https://docs.odds-api.io) - API docs and guides
 - [API Reference](https://api.odds-api.io/v3/docs/index.html) - Swagger/OpenAPI
 - [npm](https://www.npmjs.com/package/odds-api-mcp-server) - Package registry
