@@ -31,7 +31,7 @@ The server needs an Odds-API.io API key from a paid plan. Pick a plan at [odds-a
 
 ## Features
 
-- **36 tools covering every public Odds-API.io v3 REST endpoint**: sports, markets, events, odds, odds summaries, line movements, value bets, arbitrage, dropping odds, historical events and odds, closing lines, bet settlement, golf outrights, participants, bookmaker id mappings and request quota. The WebSocket stream and the participant logo image are not tools; use the REST equivalents.
+- **36 tools covering every public Odds-API.io v3 REST endpoint**: sports, markets, events, odds, odds summaries, line movements, value bets, arbitrage, dropping odds, historical events and odds, closing lines, bet settlement, same game parlays, golf outrights, participants, bookmaker id mappings and request quota. The WebSocket stream and the participant logo image are not tools; use the REST equivalents.
 - **Built for agents**: every tool says what to call first, what plan or add-on it needs and what it returns. Read tools carry `readOnlyHint`; only `select_bookmakers` and `clear_selected_bookmakers` change anything.
 - **Small responses**: compact JSON, a `markets` filter on every odds tool (market names per sport: [odds-api.io/markets](https://odds-api.io/markets)), and `fields` / `maxResults` on list tools.
 - **Clear errors**: a 403 (missing plan or add-on) or 429 (hourly limit) comes back with the API's own message and an instruction not to retry blindly.

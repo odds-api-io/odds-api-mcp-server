@@ -1,6 +1,6 @@
 ---
 name: odds-api
-description: Use the Odds-API.io MCP server to answer questions about sports betting odds, events, results, value bets, arbitrage, dropping odds, closing lines, bet settlement and golf outrights. Covers which tool to call first, how to keep responses small, quotas and error handling.
+description: Use the Odds-API.io MCP server to answer questions about sports betting odds, events, results, value bets, arbitrage, dropping odds, closing lines, bet settlement, same game parlays and golf outrights. Covers which tool to call first, how to keep responses small, quotas and error handling.
 ---
 
 # Odds-API.io agent guide

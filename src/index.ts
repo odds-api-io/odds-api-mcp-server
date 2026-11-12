@@ -1208,7 +1208,7 @@ const tools: ToolDefinition[] = [
     name: "list_sgp_bookmakers",
     title: "List same game parlay bookmakers",
     description:
-      "List bookmakers that can quote same game parlays: name, sports, maxLegs, prebuilt, jurisdiction (the region the price applies to) and status (live, paused or degraded). Only quote bookmakers whose status is live. Call this first, then get_sgp_legs. Requires SGP access on the API key: a 403 means it is not enabled, so tell the user the message and do not retry.",
+      "List bookmakers that can quote same game parlays: name, sports, maxLegs, prebuilt, jurisdiction (the region the price applies to) and status (live, paused or degraded). Prefer bookmakers whose status is live; degraded means the status could not be checked and quotes may still work; paused means quotes are temporarily unavailable. Call this first, then get_sgp_legs. Requires SGP access on the API key: a 403 means it is not enabled, so tell the user the message and do not retry.",
     annotations: READ_ONLY,
     inputSchema: {
       type: "object",
@@ -1265,7 +1265,7 @@ const tools: ToolDefinition[] = [
           type: "array",
           minItems: 2,
           maxItems: 10,
-          description: "2-10 legs from the same event. Use legId from get_sgp_legs",
+          description: "2-10 legs from the same event. Normally pass legId from get_sgp_legs. The explicit market/hdp/label/side form is for callers that already hold an /v3/odds row and must match it exactly",
           items: {
             type: "object",
             properties: {
