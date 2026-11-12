@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/odds-api-mcp-server)](https://www.npmjs.com/package/odds-api-mcp-server) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-MCP server for the [Odds-API.io](https://odds-api.io) sports betting odds API. It gives Claude, Cursor, VS Code and other AI agents live and pre-match odds from [450+ bookmakers](https://odds-api.io/sportsbooks#coverage) across 34 sports, plus odds summaries, closing lines, bet settlement, golf outrights, value bets, arbitrage and dropping odds.
+MCP server for the [Odds-API.io](https://odds-api.io) sports betting odds API. It gives Claude, Cursor, VS Code and other AI agents live and pre-match odds from [450+ bookmakers](https://odds-api.io/sportsbooks#coverage) across 34 sports, plus odds summaries, closing lines, bet settlement, same game parlays, golf outrights, value bets, arbitrage and dropping odds.
 
 ## Quickstart
 
@@ -31,7 +31,7 @@ The server needs an Odds-API.io API key from a paid plan. Pick a plan at [odds-a
 
 ## Features
 
-- **33 tools covering every public Odds-API.io v3 REST endpoint**: sports, markets, events, odds, odds summaries, line movements, value bets, arbitrage, dropping odds, historical events and odds, closing lines, bet settlement, golf outrights, participants, bookmaker id mappings and request quota. The WebSocket stream and the participant logo image are not tools; use the REST equivalents.
+- **36 tools covering every public Odds-API.io v3 REST endpoint**: sports, markets, events, odds, odds summaries, line movements, value bets, arbitrage, dropping odds, historical events and odds, closing lines, bet settlement, golf outrights, participants, bookmaker id mappings and request quota. The WebSocket stream and the participant logo image are not tools; use the REST equivalents.
 - **Built for agents**: every tool says what to call first, what plan or add-on it needs and what it returns. Read tools carry `readOnlyHint`; only `select_bookmakers` and `clear_selected_bookmakers` change anything.
 - **Small responses**: compact JSON, a `markets` filter on every odds tool (market names per sport: [odds-api.io/markets](https://odds-api.io/markets)), and `fields` / `maxResults` on list tools.
 - **Clear errors**: a 403 (missing plan or add-on) or 429 (hourly limit) comes back with the API's own message and an instruction not to retry blindly.
@@ -176,6 +176,16 @@ Requests go to `https://api.odds-api.io/v3`. Each tool call is one API request a
 |------|-------------|
 | `get_settlements` | Status, final score and `final` flag for up to 50 events |
 | `grade_bets` | Grade up to 50 bets as won, lost, void, half won, half lost, pending or ungradeable |
+
+### Same game parlays
+
+Needs SGP access on the API key.
+
+| Tool | Description |
+|------|-------------|
+| `list_sgp_bookmakers` | Bookmakers that can quote same game parlays, with sports, max legs and status |
+| `get_sgp_legs` | Legs of one pre-match event that can go into a parlay, with `legId` and per-bookmaker eligibility |
+| `quote_sgp` | Each bookmaker's price for 2 to 10 legs, with status, next action and betslip links |
 
 ### Outrights (golf)
 

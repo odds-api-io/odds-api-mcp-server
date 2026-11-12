@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.9.0
+
+### Added
+- `list_sgp_bookmakers`, `get_sgp_legs` and `quote_sgp` for same game parlays (36 tools, up from 33). List the bookmakers, copy `legId` values from the legs of an event, then quote 2 to 10 legs at each bookmaker. Each bookmaker answers with a status, `retryable` and `nextAction`. Needs SGP access on the API key.
+
 ## 1.8.4 (2026-11-13)
 
 - Docs: the `markets` parameter description and the README link to the market reference at https://odds-api.io/markets; the README links bookmaker coverage at https://odds-api.io/sportsbooks#coverage.

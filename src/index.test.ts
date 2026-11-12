@@ -89,6 +89,9 @@ describe("Tool Registry", () => {
     "get_closing_lines",
     "get_settlements",
     "grade_bets",
+    "list_sgp_bookmakers",
+    "get_sgp_legs",
+    "quote_sgp",
     "get_value_bets",
     "get_arbitrage_bets",
     "list_outrights",
@@ -101,8 +104,8 @@ describe("Tool Registry", () => {
     "get_documentation",
   ];
 
-  it("has all 33 tools registered", () => {
-    expect(tools).toHaveLength(33);
+  it("has all 36 tools registered", () => {
+    expect(tools).toHaveLength(36);
     expect(tools.map((t) => t.name).sort()).toEqual([...EXPECTED_TOOLS].sort());
   });
 
@@ -146,7 +149,7 @@ describe("Tool Registry", () => {
 
   it("uses the canonical base URL and version", () => {
     expect(API_BASE_URL).toBe("https://api.odds-api.io/v3");
-    expect(SERVER_VERSION).toBe("1.8.4");
+    expect(SERVER_VERSION).toBe("1.9.0");
   });
 
   it("has no duplicate tool names", () => {
@@ -216,6 +219,9 @@ describe("Tool Schemas - Required Parameters", () => {
     ["get_closing_lines", ["sport", "leagues", "from", "to", "markets", "bookmakers"]],
     ["get_settlements", ["eventIds"]],
     ["grade_bets", ["selections"]],
+    ["list_sgp_bookmakers", []],
+    ["get_sgp_legs", ["eventId", "bookmakers"]],
+    ["quote_sgp", ["eventId", "bookmakers", "legs"]],
     ["get_value_bets", ["bookmaker"]],
     ["get_arbitrage_bets", ["bookmakers"]],
     ["get_participants", ["sport"]],
@@ -476,6 +482,56 @@ describe("Tool Handlers", () => {
     expect(init.method).toBe("POST");
     expect(init.headers["Content-Type"]).toBe("application/json");
     expect(JSON.parse(init.body)).toEqual({ selections });
+  });
+
+  it("quote_sgp posts eventId, bookmakers and legs as a JSON body", async () => {
+    const fetchMock = mockFetchJson({ quotes: [] });
+    globalThis.fetch = fetchMock;
+
+    const legs = [{ legId: "1|ML|||home" }, { legId: "1|Totals|221.5||over", expectedPrice: "1.95" }];
+    await toolMap.get("quote_sgp")!.handler({ eventId: 1, bookmakers: "DraftKings", legs });
+
+    const [calledUrl, init] = fetchMock.mock.calls[0];
+    expect(new URL(calledUrl).pathname.endsWith("/sgp/quote")).toBe(true);
+    expect(init.method).toBe("POST");
+    expect(init.headers["Content-Type"]).toBe("application/json");
+    expect(JSON.parse(init.body)).toEqual({ eventId: 1, bookmakers: "DraftKings", legs });
+  });
+
+  it("get_sgp_legs gets /sgp/legs with eventId, bookmakers, markets and paging", async () => {
+    const fetchMock = mockFetchJson({ legs: [], hasMore: false });
+    globalThis.fetch = fetchMock;
+
+    await toolMap.get("get_sgp_legs")!.handler({ eventId: 1, bookmakers: "DraftKings", markets: "ML,Totals", limit: 50, skip: 100 });
+
+    const [calledUrl, init] = fetchMock.mock.calls[0];
+    const url = new URL(calledUrl);
+    expect(url.pathname.endsWith("/sgp/legs")).toBe(true);
+    expect(init.method ?? "GET").toBe("GET");
+    expect(url.searchParams.get("eventId")).toBe("1");
+    expect(url.searchParams.get("bookmakers")).toBe("DraftKings");
+    expect(url.searchParams.get("markets")).toBe("ML,Totals");
+    expect(url.searchParams.get("limit")).toBe("50");
+    expect(url.searchParams.get("skip")).toBe("100");
+  });
+
+  it("list_sgp_bookmakers gets /sgp/bookmakers with the sport", async () => {
+    const fetchMock = mockFetchJson([]);
+    globalThis.fetch = fetchMock;
+
+    await toolMap.get("list_sgp_bookmakers")!.handler({ sport: "basketball" });
+
+    const url = new URL(fetchMock.mock.calls[0][0]);
+    expect(url.pathname.endsWith("/sgp/bookmakers")).toBe(true);
+    expect(url.searchParams.get("sport")).toBe("basketball");
+  });
+
+  it("SGP tools are read-only and never mention line_changed or vendors", () => {
+    for (const name of ["list_sgp_bookmakers", "get_sgp_legs", "quote_sgp"]) {
+      const tool = toolMap.get(name)!;
+      expect(tool.annotations.readOnlyHint).toBe(true);
+      expect(tool.description).not.toMatch(/line_changed|oddsblaze|sure bet|guaranteed/i);
+    }
   });
 
   it("value-bet and arbitrage descriptions state the units", () => {
