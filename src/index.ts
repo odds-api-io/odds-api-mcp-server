@@ -282,7 +282,7 @@ const maxResultsProp = {
 const marketsOddsProp = {
   type: "string",
   description:
-    "Comma-separated market names, case-insensitive, max 40 (e.g. 'ML,Spread,Totals'). Strongly recommended: without it every market is returned. Call get_markets for the exact names.",
+    "Comma-separated market names, case-insensitive, max 40 (e.g. 'ML,Spread,Totals'). Strongly recommended: without it every market is returned. Call get_markets for the exact names (also at https://odds-api.io/markets).",
 };
 
 const sportProp = {
