@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/odds-api-mcp-server)](https://www.npmjs.com/package/odds-api-mcp-server) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-MCP server for the [Odds-API.io](https://odds-api.io) sports betting odds API. It gives Claude, Cursor, VS Code and other AI agents live and pre-match odds from 450+ bookmakers across 34 sports, plus odds summaries, closing lines, bet settlement, golf outrights, value bets, arbitrage and dropping odds.
+MCP server for the [Odds-API.io](https://odds-api.io) sports betting odds API. It gives Claude, Cursor, VS Code and other AI agents live and pre-match odds from [450+ bookmakers](https://odds-api.io/sportsbooks#coverage) across 34 sports, plus odds summaries, closing lines, bet settlement, golf outrights, value bets, arbitrage and dropping odds.
 
 ## Quickstart
 
@@ -33,7 +33,7 @@ The server needs an Odds-API.io API key from a paid plan. Pick a plan at [odds-a
 
 - **33 tools covering every public Odds-API.io v3 REST endpoint**: sports, markets, events, odds, odds summaries, line movements, value bets, arbitrage, dropping odds, historical events and odds, closing lines, bet settlement, golf outrights, participants, bookmaker id mappings and request quota. The WebSocket stream and the participant logo image are not tools; use the REST equivalents.
 - **Built for agents**: every tool says what to call first, what plan or add-on it needs and what it returns. Read tools carry `readOnlyHint`; only `select_bookmakers` and `clear_selected_bookmakers` change anything.
-- **Small responses**: compact JSON, a `markets` filter on every odds tool, and `fields` / `maxResults` on list tools.
+- **Small responses**: compact JSON, a `markets` filter on every odds tool (market names per sport: [odds-api.io/markets](https://odds-api.io/markets)), and `fields` / `maxResults` on list tools.
 - **Clear errors**: a 403 (missing plan or add-on) or 429 (hourly limit) comes back with the API's own message and an instruction not to retry blindly.
 - **Key safety**: the key is read from `ODDS_API_KEY` only. No tool takes it as an argument, and it is masked as `***` in every output and error.
 - **Agent guide** in [`skills/odds-api/SKILL.md`](skills/odds-api/SKILL.md): call order, caching, quotas and 429 handling. Also served as the `odds-api://guide` resource and, in short form, as the server's `instructions`.
