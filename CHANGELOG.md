@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.8.4 (2026-11-13)
 
 - Docs: the `markets` parameter description and the README link to the market reference at https://odds-api.io/markets; the README links bookmaker coverage at https://odds-api.io/sportsbooks#coverage.
 
