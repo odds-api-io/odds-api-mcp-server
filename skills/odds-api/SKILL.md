@@ -1,6 +1,6 @@
 ---
 name: odds-api
-description: Use the Odds-API.io MCP server to answer questions about sports betting odds, events, results, value bets, arbitrage, dropping odds, closing lines, bet settlement and golf outrights. Covers which tool to call first, how to keep responses small, quotas and error handling.
+description: Use the Odds-API.io MCP server to answer questions about sports betting odds, events, results, value bets, arbitrage, dropping odds, closing lines, bet settlement, same game parlays and golf outrights. Covers which tool to call first, how to keep responses small, quotas and error handling.
 ---
 
 # Odds-API.io agent guide
@@ -31,6 +31,7 @@ The `odds-api` MCP server wraps the Odds-API.io v3 REST API: odds from 450+ book
 | Value bets / arbitrage / steam | `get_value_bets`, `get_arbitrage_bets`, `get_dropping_odds` |
 | Closing line value, backtests | `get_closing_lines` (up to 10 leagues, 366 days, 100 events per page) |
 | Did my bet win? | `get_settlements`, `grade_bets` (up to 50 at once) |
+| Same game parlay price | `list_sgp_bookmakers` then `get_sgp_legs` then `quote_sgp` (2-10 legs, one pre-match event; included in all paid plans) |
 | Golf outrights | `list_outrights` then `get_outright_odds` / `get_outright_results` (Outrights add-on) |
 | Polymarket / Kalshi ids | `get_mappings` |
 | Requests left this hour | `get_usage` |
