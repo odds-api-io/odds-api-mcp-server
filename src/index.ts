@@ -1208,7 +1208,7 @@ const tools: ToolDefinition[] = [
     name: "list_sgp_bookmakers",
     title: "List same game parlay bookmakers",
     description:
-      "List the bookmakers that quote same game parlays right now (the list grows; never assume a fixed set): name, sports, maxLegs, prebuilt, jurisdiction (the region the price applies to) and status (live, paused or degraded). Prefer bookmakers whose status is live; degraded means the status could not be checked and quotes may still work; paused means quotes are temporarily unavailable. Call this first, then get_sgp_legs. Included in all paid plans.",
+      "List the bookmakers that quote same game parlays right now (the list grows; never assume a fixed set): name, sports, maxLegs, jurisdiction (the region the price applies to) and status (live, paused or degraded). Prefer bookmakers whose status is live; degraded means the status could not be checked and quotes may still work; paused means quotes are temporarily unavailable. Call this first, then get_sgp_legs. Included in all paid plans.",
     annotations: READ_ONLY,
     inputSchema: {
       type: "object",
