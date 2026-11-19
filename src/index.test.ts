@@ -530,8 +530,21 @@ describe("Tool Handlers", () => {
     for (const name of ["list_sgp_bookmakers", "get_sgp_legs", "quote_sgp"]) {
       const tool = toolMap.get(name)!;
       expect(tool.annotations.readOnlyHint).toBe(true);
-      expect(tool.description).not.toMatch(/line_changed|oddsblaze|sure bet|guaranteed/i);
+      expect(tool.description).not.toMatch(/line_changed|oddsblaze|fanduel|sure bet|guaranteed|contact support|SGP access/i);
+      expect(tool.description).toContain("Included in all paid plans");
     }
+  });
+
+  it("SGP descriptions cover per-bookmaker legs status, every next action and reason as display text", () => {
+    const legs = toolMap.get("get_sgp_legs")!.description;
+    for (const word of ["leg_unavailable", "unsupported", "temporarily_unavailable", "retry_later", "choose_other_bookmaker", "two sides of one line"]) {
+      expect(legs).toContain(word);
+    }
+    const quote = toolMap.get("quote_sgp")!.description;
+    for (const action of ["change_legs", "remove_leg", "refresh_legs", "retry", "retry_later", "choose_other_bookmaker"]) {
+      expect(quote).toContain(action);
+    }
+    expect(quote).toContain("never branch on it");
   });
 
   it("value-bet and arbitrage descriptions state the units", () => {

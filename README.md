@@ -179,12 +179,12 @@ Requests go to `https://api.odds-api.io/v3`. Each tool call is one API request a
 
 ### Same game parlays
 
-Needs SGP access on the API key.
+Included in all paid plans. `list_sgp_bookmakers` (`GET /v3/sgp/bookmakers`) returns the bookmakers that quote same game parlays right now; more are being added.
 
 | Tool | Description |
 |------|-------------|
 | `list_sgp_bookmakers` | Bookmakers that can quote same game parlays, with sports, max legs and status |
-| `get_sgp_legs` | Legs of one pre-match event that can go into a parlay, with `legId` and per-bookmaker eligibility |
+| `get_sgp_legs` | Legs of one pre-match event that can go into a parlay, with `legId`, per-bookmaker eligibility and whether each bookmaker could be checked |
 | `quote_sgp` | Each bookmaker's price for 2 to 10 legs, with status, next action and betslip links |
 
 ### Outrights (golf)

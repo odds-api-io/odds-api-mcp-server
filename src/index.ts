@@ -30,7 +30,7 @@ Call order:
 4. get_odds / get_multi_odds with bookmakers AND markets. Always pass markets: without it every market from every bookmaker comes back and responses get very large.
 5. Bookmakers must be in the key's selection: check get_selected_bookmakers.
 
-For same game parlays: list_sgp_bookmakers -> get_sgp_legs -> quote_sgp. Pass legId values from get_sgp_legs; each bookmaker answers on its own, so read every status.
+For same game parlays: list_sgp_bookmakers -> get_sgp_legs -> quote_sgp. Pass legId values from get_sgp_legs that are eligible at every bookmaker you quote, never two sides of one line; each bookmaker answers on its own, so read every status and nextAction.
 
 Keep responses small: use markets, fields and maxResults/limit arguments. get_odds_summary gives best/average/fair prices per line in one compact response.
 Errors: a 403 means the plan or add-on does not include the endpoint; tell the user the message (it names what to enable) and do not retry. A 429 means the hourly limit is spent until the reset time it gives; do not retry before then. get_usage shows the remaining requests.
@@ -1208,7 +1208,7 @@ const tools: ToolDefinition[] = [
     name: "list_sgp_bookmakers",
     title: "List same game parlay bookmakers",
     description:
-      "List bookmakers that can quote same game parlays: name, sports, maxLegs, prebuilt, jurisdiction (the region the price applies to) and status (live, paused or degraded). Prefer bookmakers whose status is live; degraded means the status could not be checked and quotes may still work; paused means quotes are temporarily unavailable. Call this first, then get_sgp_legs. Requires SGP access on the API key: a 403 means it is not enabled, so tell the user the message and do not retry.",
+      "List the bookmakers that quote same game parlays right now (the list grows; never assume a fixed set): name, sports, maxLegs, prebuilt, jurisdiction (the region the price applies to) and status (live, paused or degraded). Prefer bookmakers whose status is live; degraded means the status could not be checked and quotes may still work; paused means quotes are temporarily unavailable. Call this first, then get_sgp_legs. Included in all paid plans.",
     annotations: READ_ONLY,
     inputSchema: {
       type: "object",
@@ -1226,13 +1226,13 @@ const tools: ToolDefinition[] = [
     name: "get_sgp_legs",
     title: "Get same game parlay legs",
     description:
-      "List the legs of one pre-match event that can go into a same game parlay. Each leg has a copy-pasteable legId, market, hdp, label, side and, per bookmaker, eligible (can be combined there), price and updatedAt. Pass the legId values to quote_sgp; never build a legId by hand. Page with limit (default 200, max 1000) and skip while hasMore is true. Use markets to keep the response small. Requires SGP access on the API key.",
+      "List the legs of one pre-match event that can go into a same game parlay. Each leg has a copy-pasteable legId, market, hdp, label, side and, per bookmaker, eligible (can be combined there), price and updatedAt. Pass the legId values to quote_sgp; never build a legId by hand. The response also has bookmakers: one entry per requested bookmaker, in request order, with status ok, leg_unavailable, unsupported or temporarily_unavailable. When it is not ok, every leg reads eligible false at that bookmaker and nextAction says what to do: retry_later (call get_sgp_legs again after retryAfter seconds) or choose_other_bookmaker; leave that bookmaker out of quote_sgp. Pick legs that are eligible at every bookmaker you will quote, and never two sides of one line (for example ML home and ML away, or over and under the same total): the API rejects that with a 400. Page with limit (default 200, max 1000) and skip while hasMore is true. Use markets to keep the response small. Included in all paid plans.",
     annotations: READ_ONLY,
     inputSchema: {
       type: "object",
       properties: {
         eventId: { type: "integer", description: "Event ID from get_events. Must be pre-match" },
-        bookmakers: { type: "string", description: "Comma-separated names from list_sgp_bookmakers, max 8, from the key's selection" },
+        bookmakers: { type: "string", description: "Comma-separated names from list_sgp_bookmakers, max 8 per request, from the key's selection" },
         markets: { type: "string", description: "Comma-separated market names to keep, max 40 (e.g. 'ML,Spread,Totals')" },
         limit: { type: "integer", description: "Legs to return (default 200, max 1000)" },
         skip: { type: "integer", description: "Legs to skip, for paging (default 0)" },
@@ -1254,13 +1254,13 @@ const tools: ToolDefinition[] = [
     name: "quote_sgp",
     title: "Quote a same game parlay",
     description:
-      "Prices one same game parlay (2-10 legs from one pre-match event) at each requested bookmaker, using the bookmaker's own parlay price. Call get_sgp_legs first and pass its legId values; do not invent legs. Each bookmaker returns a status: ok (price, legsMultiplied, priceAdjustmentPct, links), not_combinable, leg_unavailable, suspended, unsupported, timeout or temporarily_unavailable, plus retryable, nextAction (change_legs, remove_leg, refresh_legs, retry, retry_later, choose_other_bookmaker) and reason. Never retry a result whose retryable is false; wait retryAfter seconds when it is set. One bookmaker failing does not fail the request. At most 2 quotes run at once per key. Read-only: it does not place bets. Requires SGP access on the API key.",
+      "Prices one same game parlay (2-10 legs from one pre-match event) at each requested bookmaker, using the bookmaker's own parlay price. Call get_sgp_legs first and pass its legId values; do not invent legs. Each bookmaker returns a status: ok (price, legsMultiplied, priceAdjustmentPct, links), not_combinable, leg_unavailable, suspended, unsupported, timeout or temporarily_unavailable, plus retryable, nextAction and reason. Branch on status and nextAction: change_legs (the legs do not combine there, replace one), remove_leg (drop the legs in legIds, or the slip exceeds that bookmaker's maxLegs), refresh_legs (call get_sgp_legs again, the line may have moved), retry, retry_later (wait retryAfter seconds when set) or choose_other_bookmaker. reason is a readable sentence to show the user; its wording can change, so never branch on it (on ok the only reason is redundant_leg, with the ignored legs in legIds). Never retry a result whose retryable is false. One bookmaker failing does not fail the request. A quote can take up to 8 seconds; at most 2 run at once per account. Read-only: it does not place bets. Included in all paid plans.",
     annotations: READ_ONLY,
     inputSchema: {
       type: "object",
       properties: {
         eventId: { type: "integer", description: "Event ID from get_events or get_sgp_legs. Must be pre-match" },
-        bookmakers: { type: "string", description: "Comma-separated names from list_sgp_bookmakers, max 8" },
+        bookmakers: { type: "string", description: "Comma-separated names from list_sgp_bookmakers, max 8 per request" },
         legs: {
           type: "array",
           minItems: 2,
