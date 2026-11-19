@@ -5,7 +5,7 @@ description: Use the Odds-API.io MCP server to answer questions about sports bet
 
 # Odds-API.io agent guide
 
-The `odds-api` MCP server wraps the Odds-API.io v3 REST API: odds from 450+ bookmakers across 34 sports. The API key comes from the `ODDS_API_KEY` environment variable only; never ask the user to paste it into the chat and never repeat it.
+The `odds-api` MCP server wraps the Odds-API.io v3 REST API: odds from 500+ bookmakers across 34 sports. The API key comes from the `ODDS_API_KEY` environment variable only; never ask the user to paste it into the chat and never repeat it.
 
 ## Call order
 

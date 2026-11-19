@@ -1,7 +1,7 @@
 {
   "name": "odds-api-mcp-server",
   "version": "1.9.0",
-  "description": "MCP server for the Odds-API.io sports betting odds API: live and pre-match odds API for 450+ bookmakers in Claude, Cursor and other AI agents",
+  "description": "MCP server for the Odds-API.io sports betting odds API: live and pre-match odds API for 500+ bookmakers in Claude, Cursor and other AI agents",
   "type": "module",
   "main": "dist/index.js",
   "bin": {

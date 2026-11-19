@@ -21,7 +21,7 @@ const DOCS_BASE_URL = "https://docs.odds-api.io";
 const PRICING_URL = "https://odds-api.io/pricing?ref=mcp";
 const API_KEY = process.env.ODDS_API_KEY ?? "";
 
-const SERVER_INSTRUCTIONS = `Odds-API.io: live and pre-match odds from 450+ bookmakers across 34 sports.
+const SERVER_INSTRUCTIONS = `Odds-API.io: live and pre-match odds from 500+ bookmakers across 34 sports.
 
 Call order:
 1. Call get_sports, then get_leagues for sport and league slugs. Never guess slugs.
