@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.9.1 (2026-11-20)
+
+- Docs: coverage is now 500+ bookmakers in the package, registry and extension descriptions, server instructions, README and skill.
+- Fix: the MCP registry description is under 100 characters.
+
 ## 1.9.0 (2026-11-19)
 
 ### Added
