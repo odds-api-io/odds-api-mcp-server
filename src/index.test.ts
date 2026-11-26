@@ -149,7 +149,7 @@ describe("Tool Registry", () => {
 
   it("uses the canonical base URL and version", () => {
     expect(API_BASE_URL).toBe("https://api.odds-api.io/v3");
-    expect(SERVER_VERSION).toBe("1.9.1");
+    expect(SERVER_VERSION).toBe("1.9.2");
   });
 
   it("has no duplicate tool names", () => {
