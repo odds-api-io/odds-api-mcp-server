@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/odds-api-mcp-server)](https://www.npmjs.com/package/odds-api-mcp-server) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-MCP server for the [Odds-API.io](https://odds-api.io) sports betting odds API. It gives Claude, Cursor, VS Code and other AI agents live and pre-match odds from [500+ bookmakers](https://odds-api.io/sportsbooks#coverage) across 34 sports, plus odds summaries, closing lines, bet settlement, same game parlays, golf outrights, value bets, arbitrage and dropping odds.
+MCP server for the [Odds-API.io](https://odds-api.io) sports betting odds API. It gives Claude, Cursor, VS Code and other AI agents live and pre-match odds from [500+ bookmakers](https://odds-api.io/sportsbooks#coverage) across 37 sports, plus odds summaries, closing lines, bet settlement, same game parlays, golf outrights, value bets, arbitrage and dropping odds.
 
 ## Quickstart
 

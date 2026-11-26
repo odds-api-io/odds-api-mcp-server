@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.2 (2026-11-26)
+
+- Docs: coverage is now 37 sports in the package, registry and extension descriptions, server instructions, README and skill.
+
 ## 1.9.1 (2026-11-20)
 
 - Docs: coverage is now 500+ bookmakers in the package, registry and extension descriptions, server instructions, README and skill.
